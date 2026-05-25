@@ -1,0 +1,23 @@
+# Netlify files (no longer needed)
+netlify.toml
+netlify/
+
+# Frontend node modules (handled separately)
+frontend/node_modules
+
+# Git
+.git
+.gitignore
+
+# Local development
+.env.local
+.env.*.local
+.DS_Store
+
+# Build artifacts
+frontend/dist
+dist
+
+# Lock files (optional - Vercel can generate them)
+# package-lock.json
+# bun.lock
