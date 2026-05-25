@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/static/css/main.ff420e8a.css",
-    "main.js": "/static/js/main.bb910afd.js",
-    "index.html": "/index.html",
-    "main.ff420e8a.css.map": "/static/css/main.ff420e8a.css.map",
-    "main.bb910afd.js.map": "/static/js/main.bb910afd.js.map"
+    "main.css": "/rajraniclinic/static/css/main.ff420e8a.css",
+    "main.js": "/rajraniclinic/static/js/main.739db5c0.js",
+    "index.html": "/rajraniclinic/index.html",
+    "main.ff420e8a.css.map": "/rajraniclinic/static/css/main.ff420e8a.css.map",
+    "main.739db5c0.js.map": "/rajraniclinic/static/js/main.739db5c0.js.map"
   },
   "entrypoints": [
     "static/css/main.ff420e8a.css",
-    "static/js/main.bb910afd.js"
+    "static/js/main.739db5c0.js"
   ]
 }
