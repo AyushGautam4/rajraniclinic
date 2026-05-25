@@ -1,0 +1,58 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="110" y1="56" x2="1065" y2="610" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#EFF6FF"/>
+      <stop offset="0.5" stop-color="#F8FAFC"/>
+      <stop offset="1" stop-color="#ECFEFF"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="188" y1="203" x2="957" y2="518" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2563EB"/>
+      <stop offset="1" stop-color="#14B8A6"/>
+    </linearGradient>
+    <filter id="blurA" x="-45" y="-54" width="502" height="502" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="44"/>
+    </filter>
+    <filter id="blurB" x="719" y="191" width="418" height="418" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="44"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" rx="36" fill="url(#bg)"/>
+  <g opacity="0.45">
+    <g filter="url(#blurA)">
+      <circle cx="206" cy="197" r="119" fill="#93C5FD"/>
+    </g>
+    <g filter="url(#blurB)">
+      <circle cx="928" cy="400" r="75" fill="#99F6E4"/>
+    </g>
+  </g>
+
+  <rect x="71" y="68" width="1058" height="494" rx="30" fill="white" fill-opacity="0.78" stroke="#E2E8F0"/>
+
+  <rect x="116" y="123" width="88" height="88" rx="24" fill="url(#accent)"/>
+  <path d="M148 160H172M160 148V172" stroke="white" stroke-width="12" stroke-linecap="round"/>
+  <path d="M128 201V174C128 170.686 130.686 168 134 168H186C189.314 168 192 170.686 192 174V201" stroke="white" stroke-width="10" stroke-linecap="round"/>
+
+  <rect x="231" y="126" width="252" height="34" rx="17" fill="#DBEAFE"/>
+  <text x="255" y="148" fill="#1D4ED8" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700">Old Kondli, New Delhi</text>
+
+  <text x="116" y="279" fill="#0F172A" font-family="Arial, Helvetica, sans-serif" font-size="72" font-weight="800">Rajrani Hospital</text>
+  <text x="116" y="353" fill="url(#accent)" font-family="Arial, Helvetica, sans-serif" font-size="64" font-weight="800">Quality Healthcare for All</text>
+  <text x="118" y="417" fill="#475569" font-family="Arial, Helvetica, sans-serif" font-size="29" font-weight="500">Emergency care, diagnostics, OPD services, and experienced doctors.</text>
+
+  <rect x="116" y="456" width="220" height="54" rx="27" fill="#0F172A"/>
+  <text x="151" y="490" fill="white" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700">Call +91-8700628028</text>
+
+  <rect x="780" y="120" width="265" height="355" rx="28" fill="#0F172A"/>
+  <rect x="809" y="150" width="208" height="117" rx="22" fill="url(#accent)" opacity="0.18"/>
+  <text x="811" y="212" fill="white" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700">36+ Years</text>
+  <text x="811" y="247" fill="#CBD5E1" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="600">Trusted community care</text>
+
+  <rect x="809" y="292" width="208" height="68" rx="18" fill="#111827" stroke="#1E293B"/>
+  <text x="831" y="333" fill="#93C5FD" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700">50,000+ Patients</text>
+
+  <rect x="809" y="380" width="208" height="68" rx="18" fill="#111827" stroke="#1E293B"/>
+  <text x="831" y="421" fill="#5EEAD4" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700">24/7 Emergency</text>
+
+  <text x="781" y="526" fill="#0F172A" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="700">ISO Certified | NABH Standards</text>
+</svg>

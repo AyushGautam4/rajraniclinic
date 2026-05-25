@@ -1,0 +1,72 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useState, useEffect, createContext } from "react";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import ScrollToTop from "./components/ScrollToTop";
+import AppEffects from "./components/AppEffects";
+import Home from "./pages/Home";
+import DoctorsPage from "./pages/DoctorsPage";
+import ServicesPage from "./pages/ServicesPage";
+import AboutPage from "./pages/AboutPage";
+import ContactPage from "./pages/ContactPage";
+import NotFoundPage from "./pages/NotFoundPage";
+import RelaxDiagnosticsPage from "./pages/RelaxDiagnosticsPage";
+import { Toaster } from "./components/ui/sonner";
+
+// Theme & Language Context
+export const AppContext = createContext();
+
+function App() {
+  const [darkMode, setDarkMode] = useState(() => {
+    const saved = localStorage.getItem('darkMode');
+    return saved ? JSON.parse(saved) : false;
+  });
+  
+  const [language, setLanguage] = useState(() => {
+    const saved = localStorage.getItem('language');
+    return saved || 'en';
+  });
+
+  useEffect(() => {
+    localStorage.setItem('darkMode', JSON.stringify(darkMode));
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [darkMode]);
+
+  useEffect(() => {
+    localStorage.setItem('language', language);
+  }, [language]);
+
+  const toggleDarkMode = () => setDarkMode(!darkMode);
+  const toggleLanguage = () => setLanguage(language === 'en' ? 'hi' : 'en');
+
+  return (
+    <AppContext.Provider value={{ darkMode, toggleDarkMode, language, toggleLanguage }}>
+      <div className={`App flex min-h-dvh flex-col overflow-x-hidden ${darkMode ? 'dark' : ''}`}>
+        <BrowserRouter>
+          <AppEffects darkMode={darkMode} language={language} />
+          <ScrollToTop />
+          <Header />
+          <main className="flex-1 overflow-x-hidden">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/doctors" element={<DoctorsPage />} />
+            <Route path="/services" element={<ServicesPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/diagnostics" element={<RelaxDiagnosticsPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+          </main>
+          <Footer />
+          <Toaster position="top-right" />
+        </BrowserRouter>
+      </div>
+    </AppContext.Provider>
+  );
+}
+
+export default App;

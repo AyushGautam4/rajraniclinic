@@ -1,0 +1,21 @@
+{
+  "name": "rajrani-hospital",
+  "version": "1.0.0",
+  "description": "Rajrani Hospital Website",
+  "private": true,
+  "scripts": {
+    "start": "cd frontend && npm start",
+    "dev": "cd frontend && npm start",
+    "build": "cd frontend && npm run build",
+    "preview": "cd frontend && npm start"
+  },
+  "dependencies": {
+    "resend": "^4.6.0"
+  },
+  "keywords": [
+    "hospital",
+    "healthcare"
+  ],
+  "author": "",
+  "license": "ISC"
+}
