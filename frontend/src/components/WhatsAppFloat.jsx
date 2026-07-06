@@ -13,7 +13,7 @@ const WhatsAppFloat = () => {
   };
 
   return (
-    <div className="whatsapp-float-wrap fixed z-50">
+    <div className="whatsapp-float-wrap fixed bottom-5 right-5 z-[120] sm:bottom-6 sm:right-6">
       <button
         onClick={handleWhatsApp}
         className="whatsapp-float flex h-11 w-11 items-center justify-center rounded-full bg-[#25D366] shadow-lg transition-transform duration-200 hover:scale-[1.04] hover:bg-[#20BD5A] md:h-14 md:w-14"

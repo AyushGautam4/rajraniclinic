@@ -1,2 +1,3 @@
 User-agent: *
 Allow: /
+Sitemap: https://ayushgautam4.github.io/rajraniclinic/sitemap.xml

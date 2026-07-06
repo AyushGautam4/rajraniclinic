@@ -24,6 +24,7 @@ import { services, hospitalInfo, diagnosticsInfo, translations } from '../mockDa
 import { AppContext } from '../App';
 import AppointmentModal from '../components/AppointmentModal';
 import WhatsAppFloat from '../components/WhatsAppFloat';
+import { assetPath } from '../lib/assetPath';
 
 const iconMap = { Stethoscope, Ambulance, HeartPulse, TestTube, Heart, Baby, Bone, Scan, Monitor, Scissors };
 
@@ -34,7 +35,7 @@ const ServicesPage = () => {
   const [showAppointmentModal, setShowAppointmentModal] = useState(false);
   const [activeServiceId, setActiveServiceId] = useState(null);
   const [isTouchCardMode, setIsTouchCardMode] = useState(false);
-  const appointmentLabel = language === 'hi' ? 'Book Appointment' : 'Book Appointment';
+  const appointmentLabel = language === 'hi' ? 'अपॉइंटमेंट बुक करें' : 'Book Appointment';
 
   useEffect(() => {
     if (typeof window === 'undefined' || !window.matchMedia) return undefined;
@@ -135,7 +136,7 @@ const ServicesPage = () => {
                 variant={selectedCategory === category.id ? 'default' : 'outline'}
                 size="sm"
                 onClick={() => setSelectedCategory(category.id)}
-                className={`text-xs sm:text-sm ${
+                className={`button-lift text-xs sm:text-sm ${
                   selectedCategory === category.id
                     ? 'border-0 bg-gradient-to-r from-teal-500 to-blue-500 text-white'
                     : darkMode
@@ -182,7 +183,15 @@ const ServicesPage = () => {
                   <CardContent className={`relative min-h-[22.5rem] p-0 ${isTouchCardMode ? 'cursor-pointer' : ''}`}>
                     <div className="service-slide-front">
                       <div className="relative h-44 overflow-hidden md:h-48">
-                        <img src={service.image} alt={service.title} className="h-full w-full object-cover object-center group-hover:scale-110 transition-transform duration-500" />
+                        <img
+                          src={assetPath(service.image)}
+                          alt={language === 'hi' ? service.titleHindi : service.title}
+                          className="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
+                          onError={(event) => {
+                            event.currentTarget.onerror = null;
+                            event.currentTarget.src = assetPath('images/services/service-emergency.jpg');
+                          }}
+                        />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/15 to-transparent" />
                         <div className="absolute inset-x-4 top-4 flex items-start justify-between gap-3">
                           <div className={`flex h-11 w-11 items-center justify-center rounded-2xl ${darkMode ? 'bg-slate-950/70 text-white' : 'bg-white/90 text-blue-600'}`}>
@@ -256,7 +265,7 @@ const ServicesPage = () => {
                       </div>
 
                       <Button
-                        className="mt-4 w-full bg-gradient-to-r from-teal-500 to-blue-500 text-white hover:from-teal-600 hover:to-blue-600"
+                        className="button-lift mt-4 w-full bg-gradient-to-r from-teal-500 to-blue-500 text-white hover:from-teal-600 hover:to-blue-600"
                         size="sm"
                         onClick={(event) => {
                           event.stopPropagation();

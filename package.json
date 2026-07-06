@@ -3,11 +3,14 @@
   "version": "1.0.0",
   "description": "Rajrani Hospital Website",
   "private": true,
+  "homepage": "https://AyushGautam4.github.io/rajraniclinic",
   "scripts": {
     "start": "cd frontend && npm start",
     "dev": "cd frontend && npm start",
     "build": "cd frontend && npm run build",
-    "preview": "cd frontend && npm start"
+    "preview": "cd frontend && npm start",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d frontend/build"
   },
   "dependencies": {
     "resend": "^4.6.0"
@@ -17,5 +20,8 @@
     "healthcare"
   ],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "gh-pages": "^6.3.0"
+  }
 }

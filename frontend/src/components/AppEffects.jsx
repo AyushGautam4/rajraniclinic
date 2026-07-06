@@ -142,7 +142,7 @@ const AppEffects = ({ darkMode, language }) => {
     const description = pageMeta.description[language] || pageMeta.description.en;
     const canonicalUrl = `${window.location.origin}${location.pathname}`;
     const previewTitle = title.replace(/\s+\|\s+Rajrani Hospital$/, '');
-    const previewImage = `${window.location.origin}/seo-preview.svg`;
+    const previewImage = `${window.location.origin}/images/hospital/hospital-main.jpg`;
     const breadcrumbName = PAGE_LABELS[location.pathname] || 'Page';
     const faqSchema = location.pathname === '/contact'
       ? {

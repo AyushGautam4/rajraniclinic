@@ -1,9 +1,33 @@
 ﻿import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
-import { 
-  Stethoscope, Ambulance, HeartPulse, TestTube, Heart, Baby, Bone, Scan, Monitor, Scissors,
-  Clock, Shield, ArrowRight, Phone, CheckCircle2, MapPin, Building2, MessageSquare
+// import { 
+//   Stethoscope, Ambulance, HeartPulse, TestTube, Heart, Baby, Bone, Scan, Monitor, Scissors,
+//   Clock, Shield, ArrowRight, Phone, CheckCircle2, MapPin, Building2, MessageSquare, Camera
+// } from 'lucide-react';
+
+import {
+  Stethoscope,
+  Ambulance,
+  HeartPulse,
+  TestTube,
+  Heart,
+  Baby,
+  Bone,
+  Scan,
+  Monitor,
+  Scissors,
+  Clock,
+  Shield,
+  Star,
+  Users,
+  ArrowRight,
+  Phone,
+  CheckCircle2,
+  MapPin,
+  Building2,
+  MessageSquare,
+  Camera
 } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Card, CardContent } from '../components/ui/card';
@@ -13,6 +37,7 @@ import { AppContext } from '../App';
 import AppointmentModal from '../components/AppointmentModal';
 import TestimonialCarousel from '../components/TestimonialCarousel';
 import WhatsAppFloat from '../components/WhatsAppFloat';
+import { assetPath } from '../lib/assetPath';
 
 const iconMap = { Stethoscope, Ambulance, HeartPulse, TestTube, Heart, Baby, Bone, Scan, Monitor, Scissors };
 
@@ -29,45 +54,45 @@ const Home = () => {
   const exploreCards = [
     {
       icon: Building2,
-      title: language === 'hi' ? 'Hospital Story' : 'Hospital Story',
+      title: language === 'hi' ? 'अस्पताल की पहचान' : 'Hospital Story',
       description: language === 'hi'
-        ? 'हम कौन हैं, किस भरोसे पर काम करते हैं, और परिवार हमारे पास क्यों लौटते हैं।'
-        : 'See who we are, how we work, and why local families trust Raj Rani Hospital.',
+        ? 'पुरानी कोंडली में परिवारों के भरोसे, साफ सलाह और जिम्मेदार इलाज की हमारी कहानी।'
+        : 'A clear look at our care philosophy, facilities, and the trust families place in Rajrani Hospital.',
       points: language === 'hi'
-        ? ['Established care identity', 'Trust-first values']
-        : ['Established care identity', 'Trust-first values'],
+        ? ['स्थापित भरोसा', 'मरीज-प्रथम सोच']
+        : ['Established trust', 'Patient-first values'],
       path: '/about',
-      cta: language === 'hi' ? 'About देखें' : 'Explore About'
+      cta: language === 'hi' ? 'अधिक जानें' : 'Explore About'
     },
     {
       icon: TestTube,
-      title: language === 'hi' ? 'Diagnostics & Offers' : 'Diagnostics & Offers',
+      title: language === 'hi' ? 'डायग्नोस्टिक्स और ऑफर' : 'Diagnostics & Offers',
       description: language === 'hi'
-        ? 'टेस्ट ऑफर, पैकेज, रेगुलर सपोर्ट और बुकिंग फ्लो एक ही जगह देखें।'
-        : 'Review test offers, packages, regular support, and booking help in one place.',
+        ? 'टेस्ट ऑफर, पैकेज और रिपोर्ट सपोर्ट को एक साफ, आसान सेक्शन में देखें।'
+        : 'Compare test offers, package options, and report support in one organized place.',
       points: language === 'hi'
-        ? ['Offer rate tests', 'Package pricing']
-        : ['Offer rate tests', 'Package pricing'],
+        ? ['ऑफर टेस्ट', 'पैकेज कीमतें']
+        : ['Offer tests', 'Package pricing'],
       path: '/diagnostics',
-      cta: language === 'hi' ? 'Diagnostics खोलें' : 'Open Diagnostics'
+      cta: language === 'hi' ? 'डायग्नोस्टिक्स देखें' : 'Open Diagnostics'
     },
     {
       icon: MessageSquare,
-      title: language === 'hi' ? 'Talk To Us Fast' : 'Talk To Us Fast',
+      title: language === 'hi' ? 'सीधा संपर्क' : 'Talk To Us Fast',
       description: language === 'hi'
-        ? 'कॉल, व्हाट्सऐप, लोकेशन और कॉन्टैक्ट फॉर्म से तुरंत सही टीम तक पहुंचें।'
-        : 'Reach the right team quickly through call, WhatsApp, directions, and contact form.',
+        ? 'कॉल, व्हाट्सऐप, लोकेशन और फॉर्म से सही टीम तक तुरंत पहुंचें।'
+        : 'Reach the right desk quickly through call, WhatsApp, directions, and the enquiry form.',
       points: language === 'hi'
-        ? ['Direct support flow', 'Callback options']
-        : ['Direct support flow', 'Callback options'],
+        ? ['सीधा सपोर्ट', 'कॉलबैक विकल्प']
+        : ['Direct support', 'Callback options'],
       path: '/contact',
-      cta: language === 'hi' ? 'Contact पर जाएं' : 'Go To Contact'
+      cta: language === 'hi' ? 'संपर्क करें' : 'Go To Contact'
     }
   ];
   const helpfulHighlights = [
-    language === 'hi' ? 'Doctor timings clearly listed' : 'Doctor timings clearly listed',
-    language === 'hi' ? 'Offer tests and package prices visible' : 'Offer tests and package prices visible',
-    language === 'hi' ? 'Call, WhatsApp, and directions one tap away' : 'Call, WhatsApp, and directions one tap away'
+    language === 'hi' ? 'डॉक्टर टाइमिंग साफ दिखती है' : 'Doctor timings clearly listed',
+    language === 'hi' ? 'टेस्ट ऑफर और पैकेज कीमतें उपलब्ध' : 'Offer tests and package prices visible',
+    language === 'hi' ? 'कॉल, व्हाट्सऐप और दिशा एक टैप में' : 'Call, WhatsApp, and directions one tap away'
   ];
   const diagnosticsHighlights = diagnosticsInfo.featureHighlights.map((item) => ({
     ...item,
@@ -85,6 +110,16 @@ const Home = () => {
           ? 'text-blue-500'
           : 'text-violet-500'
   }));
+  const hospitalGallery = [
+    { src: 'images/gallery/gallery-01.jpg', title: 'Hospital Exterior', titleHindi: 'अस्पताल बाहरी दृश्य' },
+    { src: 'images/gallery/gallery-02.jpg', title: 'Reception Desk', titleHindi: 'रिसेप्शन डेस्क' },
+    { src: 'images/gallery/gallery-04.jpg', title: 'Doctor Consultation', titleHindi: 'डॉक्टर कंसल्टेशन' },
+    { src: 'images/gallery/gallery-05.jpg', title: 'Ultrasound Room', titleHindi: 'अल्ट्रासाउंड रूम' },
+    { src: 'images/gallery/gallery-10.jpg', title: 'Echo / TMT Room', titleHindi: 'ईको / टीएमटी रूम' },
+    { src: 'images/gallery/gallery-12.jpg', title: 'Labour Room', titleHindi: 'लेबर रूम' },
+    { src: 'images/gallery/gallery-14.jpg', title: 'Operation Theatre', titleHindi: 'ऑपरेशन थिएटर' },
+    { src: 'images/gallery/gallery-17.jpg', title: 'Patient Ward', titleHindi: 'मरीज वार्ड' }
+  ];
 
   useEffect(() => {
     if (typeof window === 'undefined' || !window.matchMedia) return undefined;
@@ -100,6 +135,22 @@ const Home = () => {
     sync();
     mediaQuery.addEventListener('change', sync);
     return () => mediaQuery.removeEventListener('change', sync);
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || !('IntersectionObserver' in window)) return undefined;
+    const elements = Array.from(document.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right'));
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+    elements.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
   }, []);
 
   const handleEmergencyCall = () => {
@@ -124,12 +175,15 @@ const Home = () => {
         <div className="container mx-auto relative z-10">
           <div className="grid items-center gap-6 sm:gap-8 md:gap-10 lg:grid-cols-2 lg:gap-12">
             <div className="text-center lg:pr-6 lg:text-left">
+              <div className={`mb-3 inline-flex rounded-full px-3 py-1 text-[11px] font-extrabold uppercase tracking-[0.18em] ${darkMode ? 'bg-blue-500/15 text-blue-200 ring-1 ring-blue-500/30' : 'bg-blue-50 text-blue-700 ring-1 ring-blue-100'}`}>
+                Rajrani Hospital · Old Kondli
+              </div>
               <Badge className={`mb-4 inline-flex ${darkMode ? 'border-blue-700 bg-blue-900/50 text-blue-300' : 'bg-blue-100 text-blue-700'}`} data-testid="hero-badge">
                 <Shield className="w-3 h-3 mr-1" />
-                {language === 'hi' ? 'Trusted care for every family' : 'Trusted care for every family'}
+                {language === 'hi' ? 'हर परिवार के लिए भरोसेमंद देखभाल' : 'Trusted care for every family'}
               </Badge>
               
-              <h1 className={`mb-4 text-2xl font-bold leading-tight tracking-tight sm:text-3xl md:text-4xl lg:text-[3rem] xl:text-[3.2rem] ${darkMode ? 'text-white' : 'text-gray-900'}`} data-testid="hero-heading">
+              <h1 className={`mb-4 text-3xl font-black leading-tight tracking-tight sm:text-4xl md:text-5xl lg:text-[3.55rem] ${darkMode ? 'text-white' : 'text-gray-900'}`} data-testid="hero-heading">
                 {language === 'hi' ? 'आपकी सेहत,' : 'Your Health,'}
                 <span className={`block mt-1 ${darkMode ? 'text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-400' : 'text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-teal-600'}`}>
                   {language === 'hi' ? 'हमारी प्राथमिकता' : 'Our Priority'}
@@ -146,7 +200,7 @@ const Home = () => {
                 <Button 
                   size="lg"
                   onClick={() => setShowAppointmentModal(true)}
-                  className="bg-gradient-to-r from-blue-600 to-teal-600 hover:from-blue-700 hover:to-teal-700 text-white px-4 py-4 sm:px-6 sm:py-5 text-xs sm:text-sm md:text-base shadow-lg"
+                  className="button-lift bg-gradient-to-r from-blue-600 to-teal-600 hover:from-blue-700 hover:to-teal-700 text-white px-4 py-4 sm:px-6 sm:py-5 text-xs sm:text-sm md:text-base shadow-lg"
                   data-testid="hero-book-appointment-btn"
                 >
                   {appointmentLabel}
@@ -156,7 +210,7 @@ const Home = () => {
                   size="lg"
                   variant="outline"
                   onClick={handleEmergencyCall}
-                  className={`px-4 py-4 sm:px-6 sm:py-5 text-xs sm:text-sm md:text-base border-2 ${
+                  className={`button-lift px-4 py-4 sm:px-6 sm:py-5 text-xs sm:text-sm md:text-base border-2 ${
                     darkMode ? 'border-red-500/50 text-red-400 hover:bg-red-900/30' : 'border-red-500 text-red-600 hover:bg-red-50'
                   }`}
                   data-testid="hero-emergency-call-btn"
@@ -197,41 +251,34 @@ const Home = () => {
             </div>
 
             {/* Right - Hospital Image */}
-            <div className="relative mt-4 sm:mt-6 lg:mt-0 lg:pl-4">
-              <div className="relative">
-                <div className={`overflow-hidden rounded-[1.75rem] border shadow-2xl ${darkMode ? 'border-slate-800 shadow-blue-500/10' : 'border-white/60'}`}>
-                  <img 
-                    src="/images/about/hospital-main.jpg"
-                    alt="Raj Rani Hospital" 
-                    className="h-52 w-full object-cover object-center sm:h-60 md:h-72 lg:h-[25rem] lg:object-[50%_38%]"
-                  />
-                  <div className={`absolute inset-x-0 bottom-0 p-3 md:p-5 ${
-                    darkMode ? 'bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent' : 'bg-gradient-to-t from-white via-white/90 to-transparent'
-                  }`}>
-                    <div className={`flex flex-wrap items-center gap-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                      <span className={`inline-flex items-center rounded-full px-3 py-1.5 text-xs font-medium ${
-                        darkMode ? 'bg-slate-900/80 text-white' : 'bg-white/90 text-slate-800'
-                      }`}>
-                        <MapPin className="mr-1.5 h-3 w-3" />
-                        {language === 'hi' ? 'Purani Kondli, New Delhi' : 'Old Kondli, New Delhi'}
-                      </span>
-                      <span className={`inline-flex rounded-full px-3 py-1.5 text-xs font-medium ${
-                        darkMode ? 'bg-red-950/80 text-red-100' : 'bg-red-50 text-red-700'
-                      }`}>
-                        Emergency 24/7
-                      </span>
-                    </div>
-                  </div>
+            <div className="relative mt-4 flex flex-col gap-3 sm:mt-6 lg:mt-0 lg:pl-4">
+              <div className="hero-photo-enter relative min-h-[225px] overflow-hidden rounded-2xl shadow-2xl sm:min-h-[270px] lg:min-h-[330px]">
+                <img 
+                  src={assetPath('images/hospital/hospital-main.jpg')}
+                  alt="Raj Rani Hospital building, Old Kondli New Delhi"
+                  className="h-full w-full object-cover object-center"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                
+                {/* NABL Accreditation Badge - Bottom Left */}
+                <div className="absolute bottom-5 left-5 bg-white/90 backdrop-blur-sm rounded-xl px-4 py-3">
+                  <p className="text-xs text-gray-500 font-medium tracking-wide">NABL Accredited · CGHS Empanelled</p>
+                  <p className="text-sm font-bold text-gray-900">{language === 'hi' ? 'पुरानी कोंडली, नई दिल्ली' : 'Old Kondli, New Delhi'}</p>
+                </div>
+
+                {/* Open 24 Hours Badge - Top Right */}
+                <div className="absolute top-4 right-4 bg-green-500 text-white text-xs px-3 py-1.5 rounded-full font-semibold shadow-lg flex items-center gap-1">
+                  ✓ {language === 'hi' ? '24 घंटे खुला' : 'Open 24 Hours'}
                 </div>
               </div>
 
-              <div className="mt-4 grid gap-3 sm:grid-cols-3">
+              <div className="grid gap-3 sm:grid-cols-3">
                 {diagnosticsHighlights.map((item) => {
                   const Icon = item.icon;
                   return (
                     <div
                       key={item.title}
-                      className={`rounded-[1.35rem] border bg-gradient-to-br p-3 shadow-lg ${
+                      className={`premium-card rounded-[1.35rem] border bg-gradient-to-br p-3 shadow-lg ${
                         darkMode ? `border-slate-800 ${item.accent}` : `border-white/60 ${item.accent}`
                       }`}
                     >
@@ -267,17 +314,17 @@ const Home = () => {
                 {language === 'hi' ? 'पूरा अस्पताल एक्सप्लोर करें' : 'Explore The Full Website'}
               </Badge>
               <h2 className={`mt-3 text-xl font-bold sm:text-2xl md:text-3xl ${darkMode ? 'text-white' : 'text-slate-900'}`}>
-                {language === 'hi' ? 'सिर्फ होम तक मत रुकिए' : 'Don’t stop at the home page'}
+                {language === 'hi' ? 'हर जरूरी जानकारी, एक भरोसेमंद रास्ते में' : 'Every important step, thoughtfully connected'}
               </h2>
               <p className={`mt-2 max-w-2xl text-sm leading-7 ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
                 {language === 'hi'
-                  ? 'About, diagnostics और contact को इस तरह रखा गया है ताकि visitor तुरंत समझ सके कि अस्पताल में क्या-क्या support available है।'
-                  : 'About, diagnostics, and contact are surfaced here so visitors can quickly understand the full hospital support flow.'}
+                  ? 'डॉक्टर, सुविधाएं, डायग्नोस्टिक ऑफर और संपर्क विकल्प इस तरह रखे गए हैं कि मरीज बिना उलझन सही कदम चुन सके।'
+                  : 'Doctors, facilities, diagnostic offers, and contact options are arranged so patients can move from information to action without confusion.'}
               </p>
             </div>
             <Link to="/contact">
-              <Button variant="outline" className={darkMode ? 'border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800' : 'border-slate-200 bg-white text-slate-800 hover:bg-slate-100'}>
-                {language === 'hi' ? 'Quick Contact' : 'Quick Contact'}
+              <Button variant="outline" className={`button-lift ${darkMode ? 'border-slate-700 bg-slate-950/70 text-slate-100 hover:bg-slate-800' : 'border-slate-200 bg-white text-slate-800 hover:bg-slate-100'}`}>
+                {language === 'hi' ? 'जल्दी संपर्क करें' : 'Quick Contact'}
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
@@ -287,7 +334,7 @@ const Home = () => {
             {exploreCards.map((card) => {
               const Icon = card.icon;
               return (
-                <Card key={card.path} className={`premium-card rounded-[1.7rem] ${darkMode ? 'text-white' : 'text-slate-900'}`}>
+                <Card key={card.path} className={`premium-card scroll-reveal rounded-[1.7rem] ${darkMode ? 'text-white' : 'text-slate-900'}`}>
                   <CardContent className="p-4 sm:p-5">
                     <div className={`flex h-11 w-11 items-center justify-center rounded-2xl ${darkMode ? 'bg-blue-500/15 text-blue-300' : 'bg-blue-100 text-blue-600'}`}>
                       <Icon className="h-5 w-5" />
@@ -316,9 +363,106 @@ const Home = () => {
         </div>
       </section>
 
+      <section className={`px-3 py-8 sm:px-4 md:px-5 md:py-12 ${darkMode ? 'bg-slate-950' : 'bg-white'}`}>
+        <div className="container mx-auto">
+          <div className="mb-5 flex flex-col gap-3 md:mb-8 md:flex-row md:items-end md:justify-between">
+            <div>
+              <Badge className={`${darkMode ? 'bg-blue-900/50 text-blue-300' : 'bg-blue-100 text-blue-700'}`}>
+                <Camera className="mr-1.5 h-3.5 w-3.5" />
+                {language === 'hi' ? 'अस्पताल गैलरी' : 'Hospital Gallery'}
+              </Badge>
+              <h2 className={`mt-3 text-xl font-bold sm:text-2xl md:text-3xl ${darkMode ? 'text-white' : 'text-slate-900'}`}>
+                {language === 'hi' ? 'राजरानी हॉस्पिटल की असली झलक' : 'Real Photos From Rajrani Hospital'}
+              </h2>
+              <p className={`mt-2 max-w-2xl text-sm leading-7 ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
+                {language === 'hi'
+                  ? 'रिसेप्शन, ओपीडी, डायग्नोस्टिक्स, ओटी, वार्ड और केयर एरिया की साफ तस्वीरें।'
+                  : 'See the exterior, reception, OPD, diagnostics, OT, ward, and patient care areas in one place.'}
+              </p>
+            </div>
+            <Link to="/about">
+              <Button variant="outline" size="sm" className={`text-xs sm:text-sm ${darkMode ? 'border-slate-600 text-gray-300' : ''}`}>
+                {language === 'hi' ? 'अस्पताल के बारे में' : 'More About Hospital'}
+                <ArrowRight className="ml-1 h-3.5 w-3.5" />
+              </Button>
+            </Link>
+          </div>
+
+          <div className="section-stagger grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
+            {hospitalGallery.map((image, index) => (
+              <div
+                key={image.src}
+                className={`scroll-reveal group overflow-hidden rounded-[1.25rem] border shadow-sm ${darkMode ? 'border-slate-800 bg-slate-900' : 'border-slate-200 bg-white'}`}
+                style={{ '--stagger-index': index }}
+              >
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <img
+                    src={assetPath(image.src)}
+                    alt={language === 'hi' ? image.titleHindi : image.title}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    loading={index < 2 ? 'eager' : 'lazy'}
+                  />
+                  <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 to-transparent p-3">
+                    <p className="text-xs font-semibold text-white sm:text-sm">
+                      {language === 'hi' ? image.titleHindi : image.title}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Services Section */}
       <section className={`px-3 py-8 sm:px-4 md:py-12 lg:py-14 sm:px-5 ${darkMode ? 'bg-slate-900' : 'bg-gray-50'}`}>
         <div className="container mx-auto">
+          {/* What Makes Our Care Different */}
+          <div className="mb-10 md:mb-14">
+            <Badge className={`mb-3 ${darkMode ? 'bg-purple-900/50 text-purple-300' : 'bg-purple-100 text-purple-700'}`}>
+              {language === 'hi' ? 'हमारी विशेषता' : 'What Makes Us Different'}
+            </Badge>
+            <h2 className={`text-xl sm:text-2xl md:text-3xl font-bold mb-3 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+              {language === 'hi' ? 'क्या हमारी देखभाल को अलग बनाता है' : 'What makes our care feel different'}
+            </h2>
+            
+            <div className="section-stagger grid gap-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
+              {[
+                { icon: Heart, title: language === 'hi' ? 'करुणा' : 'Compassion', desc: language === 'hi' ? 'सम्मानजनक, शांत और समझदार देखभाल।' : 'Respectful care with calm communication.', back: language === 'hi' ? 'हर मरीज को सुना और समझा जाता है।' : 'Every patient is heard, guided, and treated with dignity.', gradient: 'linear-gradient(135deg, #f43f5e 0%, #0f766e 100%)' },
+                { icon: Shield, title: language === 'hi' ? 'भरोसा' : 'Trust', desc: language === 'hi' ? 'साफ सलाह, स्पष्ट फीस और जिम्मेदार इलाज।' : 'Clear advice, transparent fees, responsible care.', back: language === 'hi' ? 'हम उपचार से पहले जानकारी साफ रखते हैं।' : 'We keep the path clear before treatment begins.', gradient: 'linear-gradient(135deg, #2563eb 0%, #0f766e 100%)' },
+                { icon: Star, title: language === 'hi' ? 'क्वालिटी' : 'Quality', desc: language === 'hi' ? 'डॉक्टर, डायग्नोस्टिक्स और फॉलो-अप एक साथ।' : 'Doctors, diagnostics, and follow-up in one flow.', back: language === 'hi' ? 'हर सुविधा मरीज की सुविधा के हिसाब से जुड़ी है।' : 'Each service connects naturally to the next step.', gradient: 'linear-gradient(135deg, #9333ea 0%, #2563eb 100%)' },
+                { icon: Users, title: language === 'hi' ? 'मरीज पहले' : 'Patient First', desc: language === 'hi' ? 'फैसले मरीज की जरूरत से शुरू होते हैं।' : 'Care decisions start with the patient’s need.', back: language === 'hi' ? 'हम जल्दी, साफ और व्यावहारिक मदद पर ध्यान देते हैं।' : 'We focus on fast, clear, practical support.', gradient: 'linear-gradient(135deg, #059669 0%, #1d4ed8 100%)' }
+              ].map((item, idx) => {
+                const Icon = item.icon;
+                return (
+                  <div
+                    key={idx}
+                    className="value-flip-card scroll-reveal"
+                    style={{ '--stagger-index': idx }}
+                  >
+                    <div className="value-flip-inner">
+                      <div className="value-flip-face text-white shadow-lg" style={{ background: item.gradient }}>
+                        <div>
+                          <Icon className="mb-4 h-8 w-8" />
+                          <h3 className="mb-2 text-xl font-bold">{item.title}</h3>
+                          <p className="text-sm leading-6 text-white/90">{item.desc}</p>
+                        </div>
+                        <p className="text-xs font-semibold uppercase tracking-[0.16em] text-white/75">{language === 'hi' ? 'होवर करें' : 'Hover to view'}</p>
+                      </div>
+                      <div className={`value-flip-face value-flip-back border ${darkMode ? 'border-slate-700 bg-slate-900 text-white' : 'border-slate-200 bg-white text-slate-900'}`}>
+                        <div>
+                          <h3 className="text-xl font-bold">{item.title}</h3>
+                          <p className={`mt-4 text-sm leading-7 ${darkMode ? 'text-slate-200' : 'text-slate-600'}`}>{item.back}</p>
+                        </div>
+                        <p className="text-sm font-semibold text-teal-500">{language === 'hi' ? 'राजरानी हॉस्पिटल' : 'Rajrani Hospital'}</p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
           <div className="mb-5 flex flex-col gap-3 sm:gap-4 sm:flex-row sm:items-center sm:justify-between md:mb-10">
             <div>
               <Badge className={`mb-2 ${darkMode ? 'bg-teal-900/50 text-teal-300' : 'bg-teal-100 text-teal-700'}`}>{t.ourServices}</Badge>
@@ -333,15 +477,16 @@ const Home = () => {
             </Link>
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
-            {featuredServices.map((service) => {
+          <div className="section-stagger grid gap-3 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
+            {featuredServices.map((service, index) => {
               const Icon = getIcon(service.icon);
               return (
                 <Card
                   key={service.id}
-                  className={`group service-hover-card service-swipe-card border ${
+                  className={`scroll-reveal-left group service-hover-card service-swipe-card border ${
                     activeServiceId === service.id ? 'is-touch-active' : ''
                   } ${darkMode ? 'bg-slate-800/50 border-slate-700' : 'bg-white border-gray-200'}`}
+                  style={{ '--stagger-index': index }}
                   role="button"
                   tabIndex={0}
                   aria-expanded={activeServiceId === service.id}
@@ -437,11 +582,19 @@ const Home = () => {
             </Link>
           </div>
 
-          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-2 md:gap-5 lg:grid-cols-4">
-            {homeDoctors.map((doctor) => (
-              <Card key={doctor.id} className={`group overflow-hidden card-hover ${darkMode ? 'bg-slate-800/50 border-slate-700' : 'bg-white'}`}>
-                <div className="relative h-40 sm:h-48 md:h-56 overflow-hidden">
-                  <img src={doctor.image} alt={doctor.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+          <div className="section-stagger grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-2 md:gap-5 lg:grid-cols-4">
+            {homeDoctors.map((doctor, index) => (
+              <Card key={doctor.id} className={`scroll-reveal-right group overflow-hidden card-hover ${darkMode ? 'bg-slate-800/50 border-slate-700' : 'bg-white'}`} style={{ '--stagger-index': index }}>
+                <div className="relative mx-auto mt-4 h-28 w-28 overflow-hidden rounded-full ring-4 ring-blue-100 sm:h-36 sm:w-36 md:h-40 md:w-40 dark:ring-slate-700">
+                  <img
+                    src={assetPath(doctor.image)}
+                    alt={language === 'hi' ? doctor.nameHindi : doctor.name}
+                    className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-110"
+                    onError={(event) => {
+                      event.currentTarget.onerror = null;
+                      event.currentTarget.src = assetPath('images/doctors/doctor-01.jpg');
+                    }}
+                  />
                 </div>
                 <CardContent className="p-2 sm:p-3 md:p-4">
                   <h3 className={`text-xs sm:text-sm md:text-sm font-bold truncate ${darkMode ? 'text-white' : 'text-gray-900'}`}>
@@ -469,14 +622,16 @@ const Home = () => {
               {language === 'hi' ? 'क्या कहते हैं मरीज' : 'Patient Reviews'}
             </h2>
           </div>
-          <TestimonialCarousel reviews={testimonials} />
+          <div className="scroll-reveal">
+            <TestimonialCarousel reviews={testimonials} />
+          </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className={`py-8 md:py-12 lg:py-14 px-3 sm:px-4 sm:px-5 relative overflow-hidden ${
-        darkMode ? 'bg-gradient-to-r from-blue-900 via-slate-900 to-teal-900' : 'bg-gradient-to-r from-blue-600 to-teal-600'
-      }`}>
+      <section className={`relative overflow-hidden px-3 py-8 sm:px-4 md:py-12 lg:py-14 ${darkMode ? 'bg-slate-950' : 'bg-slate-900'}`}>
+        <img src={assetPath('images/hospital/hospital-main.jpg')} alt="Rajrani Hospital exterior" className="absolute inset-0 h-full w-full object-cover opacity-35" />
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-950/92 via-slate-950/86 to-teal-950/88" />
         <div className="container mx-auto text-center relative z-10">
           <h2 className="text-lg sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3 md:mb-4 text-white">
             {language === 'hi' ? 'अपॉइंटमेंट बुक करें' : 'Book Your Appointment'}
@@ -486,10 +641,10 @@ const Home = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 justify-center">
-            <Button size="lg" onClick={() => setShowAppointmentModal(true)} className="bg-white text-blue-600 hover:bg-gray-100 px-4 sm:px-5 py-3 sm:py-4 md:py-5 text-xs sm:text-sm md:text-base" data-testid="cta-book-appointment-btn">
+            <Button size="lg" onClick={() => setShowAppointmentModal(true)} className="button-lift bg-white text-blue-600 hover:bg-gray-100 px-4 sm:px-5 py-3 sm:py-4 md:py-5 text-xs sm:text-sm md:text-base" data-testid="cta-book-appointment-btn">
               {appointmentLabel} <ArrowRight className="ml-2 w-3 h-3 sm:w-4 sm:h-4" />
             </Button>
-            <Button size="lg" variant="outline" onClick={() => window.open(`https://wa.me/${hospitalInfo.whatsapp}`, '_blank')} className="border-2 border-white text-white hover:bg-white/10 px-4 sm:px-5 py-3 sm:py-4 md:py-5 text-xs sm:text-sm md:text-base" data-testid="cta-whatsapp-btn">
+            <Button size="lg" variant="outline" onClick={() => window.open(`https://wa.me/${hospitalInfo.whatsapp}`, '_blank')} className="button-lift border-2 border-white text-white hover:bg-white/10 px-4 sm:px-5 py-3 sm:py-4 md:py-5 text-xs sm:text-sm md:text-base" data-testid="cta-whatsapp-btn">
               <svg viewBox="0 0 32 32" className="w-3 h-3 sm:w-4 sm:h-4 mr-2" fill="currentColor"><path d="M16.004 0h-.008C7.174 0 0 7.176 0 16.004c0 3.5 1.132 6.742 3.052 9.376L1.056 31.08l5.884-1.942A15.92 15.92 0 0016.004 32C24.826 32 32 24.826 32 16.004 32 7.176 24.826 0 16.004 0zm9.31 22.606c-.39 1.1-2.282 2.108-3.168 2.17-.8.058-1.548.38-5.214-1.086-4.42-1.766-7.226-6.292-7.444-6.586-.218-.292-1.786-2.376-1.786-4.532 0-2.154 1.13-3.212 1.532-3.654.39-.43.862-.54 1.148-.54.286 0 .572.004.822.014.264.012.618-.1.968.738.36.862 1.226 2.984 1.334 3.202.11.218.182.474.036.766-.146.292-.218.474-.436.728-.218.256-.458.572-.654.768-.218.218-.446.454-.192.89.256.436 1.134 1.87 2.436 3.03 1.672 1.486 3.082 1.948 3.518 2.166.436.218.69.182.944-.11.256-.292 1.094-1.276 1.386-1.716.292-.436.582-.364.982-.218.398.146 2.532 1.194 2.966 1.412.436.218.726.328.834.508.11.182.11 1.04-.278 2.14z"/></svg>
               {t.whatsapp}
             </Button>

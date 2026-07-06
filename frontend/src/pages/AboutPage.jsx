@@ -24,6 +24,8 @@ import TestimonialCarousel from '../components/TestimonialCarousel';
 import WhatsAppFloat from '../components/WhatsAppFloat';
 import FlipInfoCard from '../components/FlipInfoCard';
 import FlipCardCarousel from '../components/FlipCardCarousel';
+import HospitalGallery from '../components/HospitalGallery';
+import { assetPath } from '../lib/assetPath';
 
 const AboutPage = () => {
   const { darkMode, language } = useContext(AppContext);
@@ -38,7 +40,7 @@ const AboutPage = () => {
   const trustCardImages = [
     '/images/about/trust-01.jpg',
     '/images/about/trust-02.jpg',
-    '/images/about/hospital-main.jpg'
+    'images/hospital/hospital-main.jpg'
   ];
   const storyCardImages = [
     '/images/about/story-01.jpg',
@@ -194,7 +196,7 @@ const AboutPage = () => {
                 <Button
                   size="lg"
                   onClick={() => setShowAppointmentModal(true)}
-                  className="bg-gradient-to-r from-blue-600 to-teal-600 px-5 sm:px-6 md:px-7 py-3 sm:py-4 md:py-5 text-xs sm:text-sm md:text-base text-white shadow-xl hover:from-blue-700 hover:to-teal-700"
+                  className="bg-gradient-to-r from-blue-600 to-teal-600 px-5 sm:px-6 md:px-7 py-3 sm:py-4 md:py-5 text-xs sm:text-sm md:text-base text-white shadow-xl transition-all duration-300 hover:-translate-y-0.5 hover:scale-[1.02] hover:from-blue-700 hover:to-teal-700 hover:shadow-[0_18px_38px_rgba(37,99,235,0.25)] active:scale-[0.98]"
                 >
                   {appointmentLabel}
                   <ArrowRight className="ml-2 h-3 w-3 sm:h-4 sm:w-4 md:h-4 md:w-4" />
@@ -222,11 +224,11 @@ const AboutPage = () => {
 
             <div className="space-y-4">
               <div className="premium-card rounded-[2rem] p-3">
-                <div className="overflow-hidden rounded-[1.6rem]">
+                <div className="group overflow-hidden rounded-[1.6rem]">
                   <img
-                    src="/images/about/hospital-main.jpg"
+                    src={assetPath('images/hospital/hospital-main.jpg')}
                     alt="Rajrani Hospital building"
-                    className="h-[18rem] w-full object-cover object-center sm:h-[22rem] md:h-[29rem] md:object-[50%_38%]"
+                    className="h-[18rem] w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.045] sm:h-[22rem] md:h-[29rem] md:object-[50%_38%]"
                   />
                 </div>
                 <div className={`mt-3 flex items-center justify-between rounded-[1.3rem] px-4 py-4 ${
@@ -369,20 +371,24 @@ const AboutPage = () => {
                   getKey={(item) => item.title}
                   renderItem={(card, index) => {
                     const Icon = card.icon;
+                    const gradients = [
+                      'linear-gradient(135deg, #e0f7fa 0%, #00838f 100%)',
+                      'linear-gradient(135deg, #e8f5e9 0%, #2e7d32 100%)',
+                      'linear-gradient(135deg, #ede7f6 0%, #4527a0 100%)'
+                    ];
                     return (
-                      <FlipInfoCard
-                        icon={Icon}
-                        title={card.title}
-                        frontText={card.summary}
-                        backText={card.body}
-                        backLabel={detailLabel}
-                        tone={card.tone}
-                        darkMode={darkMode}
-                        image={storyCardImages[index % storyCardImages.length]}
-                        imageAlt={`${card.title} care strategy`}
-                        hintLabel={cardHint}
-                        footerLabel={careLabel}
-                      />
+                      <div
+                        key={index}
+                        className="rounded-2xl p-7 h-64 flex flex-col justify-between text-white shadow-lg hover:shadow-2xl transition-shadow duration-300"
+                        style={{ background: gradients[index % 3] }}
+                      >
+                        <div>
+                          <Icon className="h-8 w-8 mb-4" />
+                          <h3 className="text-xl font-bold mb-2">{card.title}</h3>
+                          <p className="text-sm opacity-90">{card.summary}</p>
+                        </div>
+                        <p className="text-xs opacity-75">{card.body}</p>
+                      </div>
                     );
                   }}
                 />
@@ -390,21 +396,24 @@ const AboutPage = () => {
               <div className="mt-6 hidden md:grid md:auto-rows-fr md:grid-cols-3 md:gap-4">
                 {storyCards.map((card, index) => {
                   const Icon = card.icon;
+                  const gradients = [
+                    'linear-gradient(135deg, #e0f7fa 0%, #00838f 100%)',
+                    'linear-gradient(135deg, #e8f5e9 0%, #2e7d32 100%)',
+                    'linear-gradient(135deg, #ede7f6 0%, #4527a0 100%)'
+                  ];
                   return (
-                    <FlipInfoCard
+                    <div
                       key={card.title}
-                      icon={Icon}
-                      title={card.title}
-                      frontText={card.summary}
-                      backText={card.body}
-                      backLabel={detailLabel}
-                      tone={card.tone}
-                      darkMode={darkMode}
-                      image={storyCardImages[index % storyCardImages.length]}
-                      imageAlt={`${card.title} care strategy`}
-                      hintLabel={cardHint}
-                      footerLabel={careLabel}
-                    />
+                      className="rounded-2xl p-7 flex flex-col justify-between text-white shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105"
+                      style={{ background: gradients[index % 3], height: '280px', border: '1px solid rgba(255,255,255,0.1)' }}
+                    >
+                      <div>
+                        <Icon className="h-8 w-8 mb-4" />
+                        <h3 className="text-xl font-bold mb-2">{card.title}</h3>
+                        <p className="text-sm opacity-90">{card.summary}</p>
+                      </div>
+                      <p className="text-xs opacity-75 leading-5">{card.body}</p>
+                    </div>
                   );
                 })}
               </div>
@@ -545,6 +554,8 @@ const AboutPage = () => {
           <TestimonialCarousel reviews={testimonials} />
         </div>
       </section>
+
+      <HospitalGallery darkMode={darkMode} language={language} />
 
       <section className={`relative overflow-hidden px-4 py-8 md:py-12 ${
         darkMode ? 'bg-gradient-to-r from-blue-900 via-slate-900 to-teal-900' : 'bg-gradient-to-r from-blue-600 via-cyan-600 to-teal-600'

@@ -43,7 +43,7 @@ const Header = () => {
     const syncScrolledState = () => {
       scrollFrameRef.current = null;
       const currentScrollY = window.scrollY;
-      const nextScrolledState = currentScrollY > 18;
+      const nextScrolledState = currentScrollY > 80;
       const goingDown = currentScrollY > lastScrollYRef.current + 8;
       const goingUp = currentScrollY < lastScrollYRef.current - 8;
       let nextHiddenState = hiddenStateRef.current;
@@ -53,11 +53,7 @@ const Header = () => {
         setIsScrolled(nextScrolledState);
       }
 
-      if (isMobileMenuOpen || currentScrollY < 56 || goingUp) {
-        nextHiddenState = false;
-      } else if (currentScrollY > 140 && goingDown) {
-        nextHiddenState = true;
-      }
+      nextHiddenState = false;
 
       if (hiddenStateRef.current !== nextHiddenState) {
         hiddenStateRef.current = nextHiddenState;
@@ -145,9 +141,13 @@ const Header = () => {
         <nav className="container mx-auto px-3 py-2 sm:px-4 sm:py-3 lg:px-6">
           <div
             className={`group relative overflow-hidden rounded-[1.9rem] border px-3 py-2.5 shadow-[0_14px_30px_rgba(15,23,42,0.08)] backdrop-blur-xl transition-[border-color,box-shadow,background-color] duration-200 sm:px-4 lg:px-5 ${
-              darkMode
-                ? 'border-slate-800 bg-slate-950/96 text-white hover:border-blue-500/30 hover:shadow-[0_18px_34px_rgba(15,23,42,0.24)]'
-                : 'border-white/75 bg-white/96 text-slate-900 hover:border-blue-100 hover:shadow-[0_18px_34px_rgba(15,23,42,0.12)]'
+              isScrolled 
+                ? darkMode
+                  ? 'border-slate-700/80 bg-slate-950/98 shadow-[0_20px_40px_rgba(15,23,42,0.3)]'
+                  : 'border-slate-200/60 bg-white/98 shadow-[0_20px_40px_rgba(15,23,42,0.15)]'
+                : darkMode
+                  ? 'border-slate-800 bg-slate-950/96 text-white hover:border-blue-500/30 hover:shadow-[0_18px_34px_rgba(15,23,42,0.24)]'
+                  : 'border-white/75 bg-white/96 text-slate-900 hover:border-blue-100 hover:shadow-[0_18px_34px_rgba(15,23,42,0.12)]'
             } ${isScrolled ? 'shadow-[0_16px_28px_rgba(15,23,42,0.12)]' : ''}`}
           >
             <div className="pointer-events-none absolute inset-x-10 top-0 h-px bg-gradient-to-r from-transparent via-blue-400/70 to-transparent opacity-80" />
@@ -171,18 +171,28 @@ const Header = () => {
                   <NavLink
                     key={link.path}
                     to={link.path}
-                    className={({ isActive }) => `nav-link-underline rounded-full px-3 py-2 text-sm font-medium transition-all duration-300 ${
+                    className={({ isActive }) => `relative rounded-full px-3 py-2 text-sm font-medium transition-all duration-300 ${
                       isActive
                         ? darkMode
-                          ? 'nav-link-active bg-gradient-to-r from-blue-600 to-teal-600 text-white shadow-[0_10px_24px_rgba(37,99,235,0.28)]'
-                          : 'nav-link-active bg-gradient-to-r from-blue-600 to-teal-600 text-white shadow-[0_10px_24px_rgba(37,99,235,0.2)]'
+                          ? 'text-teal-300'
+                          : 'text-teal-600'
                         : darkMode
-                          ? 'text-gray-300 hover:bg-white/5 hover:text-white'
-                          : 'text-gray-700 hover:bg-blue-50 hover:text-blue-700'
+                          ? 'text-gray-300 hover:text-white'
+                          : 'text-gray-700 hover:text-blue-700'
                     }`}
                     data-testid={`nav-${link.path.replace('/', '') || 'home'}`}
                   >
-                    {link.name}
+                    {({ isActive }) => (
+                      <>
+                        {link.name}
+                        <span
+                          aria-hidden="true"
+                          className={`absolute bottom-1 left-3 right-3 h-0.5 rounded-full bg-teal-500 transition-all duration-300 ${
+                            isActive ? 'scale-x-100 opacity-100' : 'scale-x-95 opacity-0'
+                          }`}
+                        />
+                      </>
+                    )}
                   </NavLink>
                 ))}
               </div>
@@ -240,9 +250,24 @@ const Header = () => {
             </div>
 
             {isMobileMenuOpen && (
-              <div className={`mt-3 rounded-[1.5rem] border p-3 lg:hidden ${
+              <div className={`mt-3 rounded-[1.5rem] border p-3 lg:hidden overflow-hidden slide-down-animation ${
                 darkMode ? 'border-slate-800 bg-slate-900/95' : 'border-slate-200 bg-slate-50/95'
-              }`}>
+              }`}
+              style={{
+                animation: 'slideDown 0.3s ease forwards'
+              }}>
+                <style>{`
+                  @keyframes slideDown {
+                    from {
+                      opacity: 0;
+                      transform: translateY(-10px);
+                    }
+                    to {
+                      opacity: 1;
+                      transform: translateY(0);
+                    }
+                  }
+                `}</style>
                 <div className="mb-3 flex items-center gap-3 rounded-2xl bg-white/60 px-3 py-3 dark:bg-slate-950/80">
                   <HospitalLogo size="md" />
                   <div>

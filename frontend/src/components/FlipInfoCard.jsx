@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
+import { assetPath } from '../lib/assetPath';
 
 const FlipInfoCard = ({
   icon: Icon,
@@ -56,7 +57,7 @@ const FlipInfoCard = ({
   }[tone];
 
   const cardHint = hintLabel || (supportsHover ? 'Hover to explore' : 'Tap to reveal');
-  const imageSrc = image || '/images/about/hospital-main.jpg';
+  const imageSrc = assetPath(image || 'images/hospital/hospital-main.jpg');
   const imageLabel = imageAlt || title;
 
   const handleCardClick = () => {

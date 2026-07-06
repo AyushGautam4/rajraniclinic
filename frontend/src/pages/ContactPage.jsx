@@ -37,10 +37,44 @@ const ContactPage = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [openFaq, setOpenFaq] = useState(null);
   const [submitFeedback, setSubmitFeedback] = useState({ type: '', message: '' });
+  const [formErrors, setFormErrors] = useState({});
   const formFieldClassName = `allow-copy mt-2 h-12 rounded-xl border ${darkMode ? 'border-slate-700 bg-slate-900 text-white placeholder:text-slate-500' : 'border-slate-200 bg-white'}`;
   const formTextAreaClassName = `allow-copy mt-2 resize-none rounded-xl border ${darkMode ? 'border-slate-700 bg-slate-900 text-white placeholder:text-slate-500' : 'border-slate-200 bg-white'}`;
 
-  const handleInputChange = (event) => setFormData({ ...formData, [event.target.name]: event.target.value });
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData({ ...formData, [name]: value });
+    if (formErrors[name]) {
+      setFormErrors({ ...formErrors, [name]: '' });
+    }
+  };
+
+  const validateForm = () => {
+    const nextErrors = {};
+    const phoneValue = formData.phone.trim();
+    const emailValue = formData.email.trim();
+
+    if (!formData.name.trim()) {
+      nextErrors.name = language === 'hi' ? 'कृपया अपना नाम लिखें।' : 'Please enter your name.';
+    }
+
+    if (!phoneValue) {
+      nextErrors.phone = language === 'hi' ? 'कृपया फोन नंबर लिखें।' : 'Please enter your phone number.';
+    } else if (!/^[6-9]\d{9}$/.test(phoneValue)) {
+      nextErrors.phone = language === 'hi' ? 'कृपया सही 10 अंकों का भारतीय मोबाइल नंबर लिखें।' : 'Enter a valid 10-digit Indian mobile number.';
+    }
+
+    if (emailValue && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
+      nextErrors.email = language === 'hi' ? 'कृपया सही ईमेल लिखें।' : 'Enter a valid email address.';
+    }
+
+    if (!formData.message.trim()) {
+      nextErrors.message = language === 'hi' ? 'कृपया अपना मैसेज लिखें।' : 'Please write your message.';
+    }
+
+    setFormErrors(nextErrors);
+    return Object.keys(nextErrors).length === 0;
+  };
 
   const getContactTransport = () => {
     const customEndpoint = process.env.REACT_APP_CONTACT_ENDPOINT?.trim();
@@ -99,8 +133,8 @@ const ContactPage = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!formData.name || !formData.phone || !formData.message) {
-      toast.error(language === 'hi' ? 'कृपया सभी जरूरी फील्ड भरें।' : 'Please fill all required fields.');
+    if (!validateForm()) {
+      toast.error(language === 'hi' ? 'कृपया फॉर्म की जानकारी ठीक करें।' : 'Please correct the highlighted fields.');
       return;
     }
 
@@ -386,18 +420,21 @@ const ContactPage = () => {
               <div className="grid gap-2 sm:gap-3 md:gap-4 md:grid-cols-2">
                 <div>
                   <Label htmlFor="name" className={`text-xs sm:text-sm ${darkMode ? 'text-slate-200' : 'text-slate-700'}`}>{language === 'hi' ? 'नाम' : 'Name'} *</Label>
-                  <Input id="name" name="name" value={formData.name} onChange={handleInputChange} placeholder={language === 'hi' ? 'आपका नाम' : 'Your full name'} className={formFieldClassName} autoComplete="name" required />
+                  <Input id="name" name="name" value={formData.name} onChange={handleInputChange} placeholder={language === 'hi' ? 'आपका नाम' : 'Your full name'} className={formFieldClassName} autoComplete="name" aria-invalid={Boolean(formErrors.name)} required />
+                  {formErrors.name ? <p className="mt-1.5 text-xs font-medium text-red-500">{formErrors.name}</p> : null}
                 </div>
                 <div>
                   <Label htmlFor="phone" className={`text-xs sm:text-sm ${darkMode ? 'text-slate-200' : 'text-slate-700'}`}>{language === 'hi' ? 'फ़ोन' : 'Phone'} *</Label>
-                  <Input id="phone" name="phone" type="tel" value={formData.phone} onChange={handleInputChange} placeholder="10 digit number" maxLength={10} inputMode="numeric" autoComplete="tel-national" className={formFieldClassName} required />
+                  <Input id="phone" name="phone" type="tel" value={formData.phone} onChange={handleInputChange} placeholder={language === 'hi' ? '10 अंकों का नंबर' : '10 digit number'} maxLength={10} inputMode="numeric" autoComplete="tel-national" className={formFieldClassName} aria-invalid={Boolean(formErrors.phone)} required />
+                  {formErrors.phone ? <p className="mt-1.5 text-xs font-medium text-red-500">{formErrors.phone}</p> : null}
                 </div>
               </div>
 
               <div className="grid gap-2 sm:gap-3 md:gap-4 md:grid-cols-2">
                 <div>
                   <Label htmlFor="email" className={`text-xs sm:text-sm ${darkMode ? 'text-slate-200' : 'text-slate-700'}`}>Email</Label>
-                  <Input id="email" name="email" type="email" value={formData.email} onChange={handleInputChange} placeholder="you@example.com" autoComplete="email" className={formFieldClassName} />
+                  <Input id="email" name="email" type="email" value={formData.email} onChange={handleInputChange} placeholder="you@example.com" autoComplete="email" className={formFieldClassName} aria-invalid={Boolean(formErrors.email)} />
+                  {formErrors.email ? <p className="mt-1.5 text-xs font-medium text-red-500">{formErrors.email}</p> : null}
                 </div>
                 <div>
                   <Label htmlFor="subject" className={`text-xs sm:text-sm ${darkMode ? 'text-slate-200' : 'text-slate-700'}`}>{language === 'hi' ? 'विषय' : 'Subject'}</Label>
@@ -407,7 +444,8 @@ const ContactPage = () => {
 
               <div>
                 <Label htmlFor="message" className={`text-xs sm:text-sm ${darkMode ? 'text-slate-200' : 'text-slate-700'}`}>{language === 'hi' ? 'मैसेज' : 'Message'} *</Label>
-                <Textarea id="message" name="message" value={formData.message} onChange={handleInputChange} rows={4} placeholder={language === 'hi' ? 'अपनी जरूरत या सवाल यहां लिखें...' : 'Describe your need or question here...'} autoComplete="off" className={formTextAreaClassName} required />
+                <Textarea id="message" name="message" value={formData.message} onChange={handleInputChange} rows={4} placeholder={language === 'hi' ? 'अपनी जरूरत या सवाल यहां लिखें...' : 'Describe your need or question here...'} autoComplete="off" className={formTextAreaClassName} aria-invalid={Boolean(formErrors.message)} required />
+                {formErrors.message ? <p className="mt-1.5 text-xs font-medium text-red-500">{formErrors.message}</p> : null}
               </div>
 
               <div className="flex flex-col gap-2 sm:gap-3 sm:flex-row">

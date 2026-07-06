@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+﻿import React, { useContext, useState } from 'react';
 import {
   ArrowRight,
   CheckCircle2,
@@ -33,6 +33,7 @@ const formatCurrency = (value) => `Rs. ${value}`;
 const RelaxDiagnosticsPage = () => {
   const { darkMode, language } = useContext(AppContext);
   const [expandedPackages, setExpandedPackages] = useState({});
+  const [activeTab, setActiveTab] = useState(0);
   const t = translations[language];
 
   const handleCall = () => window.location.href = `tel:${diagnosticsInfo.phone}`;
@@ -59,25 +60,25 @@ const RelaxDiagnosticsPage = () => {
 
   const regularSupportCards = [
     {
-      title: language === 'hi' ? 'Routine pathology support' : 'Routine pathology support',
+      title: language === 'hi' ? 'रूटीन पैथोलॉजी सपोर्ट' : 'Routine pathology support',
       description: language === 'hi'
-        ? 'CBC, sugar, liver, kidney, thyroid, dengue, typhoid aur follow-up sample testing ke liye regular support available hai.'
-        : 'Regular support is available for CBC, sugar, liver, kidney, thyroid, dengue, typhoid, and follow-up sample testing.',
-      items: ['Daily sample collection', 'Same-day guidance', 'Report support']
+        ? 'सीबीसी, शुगर, लिवर, किडनी, थायरॉयड और बुखार से जुड़े टेस्ट के लिए रोजाना सैंपल और रिपोर्ट सपोर्ट उपलब्ध है।'
+        : 'Daily sample and report support for CBC, sugar, liver, kidney, thyroid, and fever-related blood tests.',
+      items: language === 'hi' ? ['रोजाना सैंपल', 'रिपोर्ट गाइडेंस', 'फॉलो-अप सपोर्ट'] : ['Daily samples', 'Report guidance', 'Follow-up support']
     },
     {
-      title: language === 'hi' ? 'Imaging and cardiac support' : 'Imaging and cardiac support',
+      title: language === 'hi' ? 'इमेजिंग और कार्डियक सपोर्ट' : 'Imaging and cardiac support',
       description: language === 'hi'
-        ? 'Digital X-Ray, 2D Echo, Colour Ultrasound aur ECG linked hospital coordination ke saath available hain.'
-        : 'Digital X-Ray, 2D Echo, Colour Ultrasound, and ECG are available with linked hospital coordination.',
-      items: ['Digital X-Ray', '2D Echo', 'Colour Ultrasound']
+        ? 'डिजिटल एक्स-रे, 2D ईको, कलर अल्ट्रासाउंड और ईसीजी के लिए अस्पताल से जुड़ा समन्वय मिलता है।'
+        : 'Digital X-Ray, 2D Echo, Colour Ultrasound, and ECG are coordinated with hospital-linked support.',
+      items: language === 'hi' ? ['डिजिटल एक्स-रे', '2D ईको', 'कलर अल्ट्रासाउंड'] : ['Digital X-Ray', '2D Echo', 'Colour Ultrasound']
     },
     {
-      title: language === 'hi' ? 'Preventive and package desk' : 'Preventive and package desk',
+      title: language === 'hi' ? 'प्रिवेंटिव और पैकेज डेस्क' : 'Preventive and package desk',
       description: language === 'hi'
-        ? 'Full body check-up, fever profiles, thyroid profile aur monitoring packages ke liye same diagnostics desk par booking hoti hai.'
-        : 'Full body check-ups, fever profiles, thyroid profiles, and monitoring packages can all be booked from the same diagnostics desk.',
-      items: ['Full body packages', 'Fever profiles', 'Monitoring panels']
+        ? 'फुल बॉडी चेक-अप, फीवर प्रोफाइल, थायरॉयड और मॉनिटरिंग पैकेज के लिए एक ही डेस्क पर बुकिंग होती है।'
+        : 'Full body check-ups, fever profiles, thyroid panels, and monitoring packages can be booked from one desk.',
+      items: language === 'hi' ? ['फुल बॉडी पैकेज', 'फीवर प्रोफाइल', 'मॉनिटरिंग पैनल'] : ['Full body packages', 'Fever profiles', 'Monitoring panels']
     }
   ];
 
@@ -87,10 +88,9 @@ const RelaxDiagnosticsPage = () => {
       [packageCode]: !current[packageCode]
     }));
   };
-
   return (
-    <div className={`page-shell min-h-screen ${darkMode ? 'bg-slate-950' : 'bg-white'}`}>
-      <section className={`page-hero-offset relative overflow-hidden px-4 pb-8 ${
+    <div className={`page-shell min-h-screen ${darkMode ? 'bg-slate-950' : 'bg-white'}`}> 
+      <section className={`relative overflow-hidden px-4 pb-8 pt-6 ${
         darkMode ? 'bg-gradient-to-br from-slate-950 via-teal-950/25 to-slate-950' : 'bg-gradient-to-br from-teal-50 via-white to-blue-50'
       }`}>
         <div className={`pointer-events-none absolute left-0 top-14 h-40 w-40 rounded-full blur-3xl ${darkMode ? 'bg-teal-500/18' : 'bg-teal-300/40'}`}></div>
@@ -100,7 +100,7 @@ const RelaxDiagnosticsPage = () => {
           <div>
             <Badge className={`glass-pill mb-4 border ${darkMode ? 'border-teal-800 bg-teal-900/40 text-teal-200' : 'border-teal-200 bg-white/80 text-teal-700'}`}>
               <Sparkles className="mr-2 h-3.5 w-3.5" />
-              {language === 'hi' ? 'Offer tests aur packages ab alag clear sections me' : 'Offer tests and packages now sit in clear separate sections'}
+              {language === 'hi' ? 'ऑफर टेस्ट और पैकेज साफ सेक्शन में' : 'Offer tests and packages now sit in clear separate sections'}
             </Badge>
 
             <h1 className={`text-4xl font-black tracking-tight sm:text-5xl md:text-6xl ${darkMode ? 'text-white' : 'text-slate-900'}`}>
@@ -241,48 +241,73 @@ const RelaxDiagnosticsPage = () => {
             </div>
           </div>
 
-          <div className="grid gap-4 xl:grid-cols-2">
-            {diagnosticsInfo.offerCategories.map((category) => (
-              <Card key={category.key} className="premium-card rounded-[1.8rem]">
-                <CardContent className="p-5 md:p-6">
-                  <div className="flex items-start justify-between gap-3">
+          <div className="space-y-6">
+            {/* Tab bar */}
+            <div className="overflow-x-auto hide-scrollbar">
+              <div className="flex gap-2 md:gap-3 pb-2 -mx-4 px-4 md:mx-0 md:px-0">
+                {diagnosticsInfo.offerCategories.map((category, index) => (
+                  <button
+                    key={category.key}
+                    onClick={() => setActiveTab(index)}
+                    className={`shrink-0 rounded-full px-4 py-2.5 text-sm font-semibold transition-all duration-300 whitespace-nowrap ${
+                      activeTab === index
+                        ? 'bg-teal-500 text-white shadow-lg shadow-teal-500/30'
+                        : darkMode
+                          ? 'bg-slate-800/60 text-slate-300 hover:bg-slate-700/80'
+                          : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                    }`}
+                  >
+                    {language === 'hi' ? category.titleHindi : category.title}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Tab content */}
+            <div className="space-y-4">
+              {diagnosticsInfo.offerCategories[activeTab] && (
+                <div className="space-y-4">
+                  <div className="flex items-start justify-between gap-3 mb-5">
                     <div>
-                      <h3 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>
-                        {language === 'hi' ? category.titleHindi : category.title}
+                      <h3 className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>
+                        {language === 'hi' ? diagnosticsInfo.offerCategories[activeTab].titleHindi : diagnosticsInfo.offerCategories[activeTab].title}
                       </h3>
-                      <p className={`mt-2 text-sm leading-7 ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>{category.description}</p>
+                      <p className={`mt-2 text-sm leading-7 ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
+                        {diagnosticsInfo.offerCategories[activeTab].description}
+                      </p>
                     </div>
                     <div className={`rounded-2xl px-3 py-2 text-xs font-semibold ${darkMode ? 'bg-teal-500/15 text-teal-200' : 'bg-teal-100 text-teal-700'}`}>
-                      {category.tests.length} items
+                      {diagnosticsInfo.offerCategories[activeTab].tests.length} items
                     </div>
                   </div>
 
-                  <div className="mt-5 space-y-2.5">
-                    {category.tests.map((test) => (
-                      <div key={test.name} className={`hover-accent-row rounded-2xl border px-4 py-3 ${darkMode ? 'border-slate-700 bg-slate-950/65' : 'border-slate-200 bg-slate-50'}`}>
+                  <div className="grid gap-3 md:grid-cols-2">
+                    {diagnosticsInfo.offerCategories[activeTab].tests.map((test) => (
+                      <div key={test.name} className={`rounded-2xl border px-4 py-3 transition-all duration-200 ${
+                        darkMode
+                          ? 'border-slate-700 bg-slate-950/65 hover:bg-slate-900/80 hover:border-teal-600/40'
+                          : 'border-slate-200 bg-slate-50 hover:bg-teal-50 hover:border-teal-400'
+                      }`}>
                         <div className="flex items-start justify-between gap-4">
-                          <div className="flex items-start gap-3">
+                          <div className="flex items-start gap-3 flex-1">
                             <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-teal-500" />
-                            <div>
+                            <div className="min-w-0">
                               <p className={`text-sm font-semibold ${darkMode ? 'text-slate-100' : 'text-slate-800'}`}>
                                 {language === 'hi' ? test.nameHindi : test.name}
                               </p>
-                              <p className={`mt-1 text-xs ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>
-                                {language === 'hi' ? 'Original rate and offer rate' : 'Original rate and offer rate'}
-                              </p>
                             </div>
                           </div>
-                          <div className="text-right">
+                          <div className="text-right shrink-0">
                             <p className={`text-xs line-through ${darkMode ? 'text-slate-500' : 'text-slate-400'}`}>{formatCurrency(test.originalPrice)}</p>
-                            <p className="text-sm font-bold text-blue-500">{formatCurrency(test.offerPrice)}</p>
+                            <p className="text-sm font-bold text-teal-500">{formatCurrency(test.offerPrice)}</p>
                           </div>
                         </div>
                       </div>
                     ))}
                   </div>
-                </CardContent>
-              </Card>
-            ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </section>
@@ -447,7 +472,7 @@ const RelaxDiagnosticsPage = () => {
               <div className="mt-6 flex flex-col gap-3 sm:flex-row">
                 <Button onClick={handleCall} className="bg-gradient-to-r from-teal-600 to-blue-600 text-white">
                   <Phone className="mr-2 h-4 w-4" />
-                  {language === 'hi' ? 'अभी कॉल करें' : 'Call now'}
+                  {language === 'hi' ? 'à¤…à¤­à¥€ à¤•à¥‰à¤² à¤•à¤°à¥‡à¤‚' : 'Call now'}
                 </Button>
                 <Button variant="outline" onClick={handleWhatsAppSupport} className={darkMode ? 'border-slate-700 text-slate-100 hover:bg-slate-800' : 'border-slate-200 text-slate-800 hover:bg-slate-50'}>
                   <TestTube2 className="mr-2 h-4 w-4" />

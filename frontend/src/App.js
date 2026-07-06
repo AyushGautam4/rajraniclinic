@@ -12,9 +12,33 @@ import ContactPage from "./pages/ContactPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import RelaxDiagnosticsPage from "./pages/RelaxDiagnosticsPage";
 import { Toaster } from "./components/ui/sonner";
+import WelcomePopup from "./components/WelcomePopup";
+import HospitalChatbot from "./components/HospitalChatbot";
 
 // Theme & Language Context
 export const AppContext = createContext();
+
+const getRouterBasename = () => {
+  const publicUrl = process.env.PUBLIC_URL;
+
+  if (!publicUrl || typeof window === 'undefined') {
+    return undefined;
+  }
+
+  try {
+    const publicPath = new URL(publicUrl, window.location.origin).pathname.replace(/\/$/, '');
+
+    if (!publicPath || publicPath === '/') {
+      return undefined;
+    }
+
+    return window.location.pathname === publicPath || window.location.pathname.startsWith(`${publicPath}/`)
+      ? publicPath
+      : undefined;
+  } catch (error) {
+    return undefined;
+  }
+};
 
 function App() {
   const [darkMode, setDarkMode] = useState(() => {
@@ -46,7 +70,7 @@ function App() {
   return (
     <AppContext.Provider value={{ darkMode, toggleDarkMode, language, toggleLanguage }}>
       <div className={`App flex min-h-dvh flex-col overflow-x-hidden ${darkMode ? 'dark' : ''}`}>
-        <BrowserRouter>
+        <BrowserRouter basename={getRouterBasename()}>
           <AppEffects darkMode={darkMode} language={language} />
           <ScrollToTop />
           <Header />
@@ -62,6 +86,8 @@ function App() {
           </Routes>
           </main>
           <Footer />
+          <WelcomePopup />
+          <HospitalChatbot />
           <Toaster position="top-right" />
         </BrowserRouter>
       </div>

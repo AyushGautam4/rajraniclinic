@@ -1,6 +1,8 @@
+
 {
   "name": "rajrani-hospital-frontend",
   "version": "1.0.0",
+  "homepage": "https://AyushGautam4.github.io/rajraniclinic",
   "private": true,
   "dependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
@@ -10,7 +12,7 @@
     "autoprefixer": "^10.4.20",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "lucide-react": "^0.507.0",
+    "lucide-react": "^0.507.0",  
     "postcss": "^8.4.49",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

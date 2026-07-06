@@ -153,6 +153,193 @@ html {
   50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.5); }
 }
 
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(2rem); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.hero-photo-enter {
+  opacity: 0;
+  transform: translateX(2rem);
+  animation: fadeInRight 0.7s ease 0.2s forwards;
+}
+
+.welcome-popup-card {
+  animation: popupIn 0.3s ease forwards;
+}
+
+@keyframes popupIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.chatbot-pulse {
+  animation: chatbotPulse 2.8s ease-out infinite;
+}
+
+@keyframes chatbotPulse {
+  0% { box-shadow: 0 0 0 0 rgba(13, 148, 136, 0.36); }
+  70% { box-shadow: 0 0 0 12px rgba(13, 148, 136, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(13, 148, 136, 0); }
+}
+
+.typing-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: #0d9488;
+  animation: typingBounce 1s ease-in-out infinite;
+}
+
+.typing-dot:nth-child(2) { animation-delay: 0.12s; }
+.typing-dot:nth-child(3) { animation-delay: 0.24s; }
+
+@keyframes typingBounce {
+  0%, 80%, 100% { transform: translateY(0); opacity: .45; }
+  40% { transform: translateY(-4px); opacity: 1; }
+}
+
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(2rem);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.scroll-reveal-left {
+  opacity: 0;
+  transform: translateX(-1.5rem);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.scroll-reveal-right {
+  opacity: 0;
+  transform: translateX(1.5rem);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.scroll-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-reveal-left.is-visible,
+.scroll-reveal-right.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.section-stagger > * {
+  transition-delay: calc(var(--stagger-index, 0) * 75ms);
+}
+
+.button-lift {
+  cursor: pointer;
+  transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 180ms ease, filter 180ms ease, background-color 180ms ease, border-color 180ms ease;
+}
+
+.button-lift:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.16);
+  filter: saturate(1.04);
+}
+
+.button-lift:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.12);
+}
+
+.review-enter {
+  animation: reviewEnter 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes reviewEnter {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.value-flip-card {
+  perspective: 1100px;
+}
+
+.value-flip-inner {
+  position: relative;
+  min-height: 18rem;
+  transform-style: preserve-3d;
+  transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.value-flip-card:hover .value-flip-inner,
+.value-flip-card:focus-within .value-flip-inner {
+  transform: rotateY(180deg);
+}
+
+.value-flip-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  backface-visibility: hidden;
+  border-radius: 1rem;
+  padding: 1.5rem;
+}
+
+.value-flip-back {
+  transform: rotateY(180deg);
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.gradient-value-card {
+  min-height: 300px;
+  border-radius: 16px;
+  padding: 24px;
+  color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gradient-value-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+.about-gradient-card {
+  min-height: 280px;
+  border-radius: 16px;
+  padding: 28px;
+  color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about-gradient-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+.facility-gallery {
+  columns: 2;
+  column-gap: 12px;
+}
+
+@media (min-width: 768px) {
+  .facility-gallery { columns: 3; }
+}
+
+@media (min-width: 1024px) {
+  .facility-gallery { columns: 4; }
+}
+
+.facility-gallery-item {
+  break-inside: avoid;
+  margin-bottom: 12px;
+}
+
 .animate-glow {
   animation: glow 5s ease-in-out infinite;
 }
