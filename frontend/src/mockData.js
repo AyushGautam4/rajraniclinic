@@ -9,10 +9,11 @@ export const hospitalInfo = {
   established: "2005",
   accreditation: "ISO Certified | NABH Standards",
   accreditationHindi: "आईएसओ प्रमाणित | एनएबीएच मानक",
-  phone: "+91-8700628028",
-  whatsapp: "918700628028",
-  emergency: "+91-8700628028",
-  email: "abhinay.gautam0072@gmail.com",
+  phone: "+91-9773626003",
+  whatsapp: "919560031001",
+  emergency: "+91-9350009600",
+  emergencyAlt: "+91-9773626003",
+  email: "Rajranihospital66@gmail.com",
   address: "Plot No. D-3, Main Market, Old Kondli, New Delhi, Delhi 110096",
   addressHindi: "प्लॉट नं. D-3, मेन मार्केट, पुरानी कोंडली, नई दिल्ली 110096",
   googleMapsLink: "https://maps.app.goo.gl/P5xfA87tjCE6Bit79",
@@ -979,20 +980,31 @@ export const facilities = [
 ];
 
 export const footerServices = [
-  "OPD Services", "Emergency Care", "X-Ray", "Ultrasound", "Blood Tests",
-  "Surgery", "Orthopedics", "Gynecology", "Pediatrics", "ECG",
-  "Health Checkup", "Physiotherapy", "Diagnostic Lab", "Vaccination"
+  { name: "OPD Services", nameHindi: "ओपीडी सेवाएं" },
+  { name: "Emergency Care", nameHindi: "आपातकालीन सेवा" },
+  { name: "X-Ray", nameHindi: "एक्स-रे" },
+  { name: "Ultrasound", nameHindi: "अल्ट्रासाउंड" },
+  { name: "Blood Tests", nameHindi: "रक्त जाँच" },
+  { name: "Surgery", nameHindi: "सर्जरी" },
+  { name: "Orthopedics", nameHindi: "ऑर्थोपेडिक्स" },
+  { name: "Gynecology", nameHindi: "स्त्री रोग" },
+  { name: "Pediatrics", nameHindi: "बाल रोग" },
+  { name: "ECG", nameHindi: "ईसीजी" },
+  { name: "Health Checkup", nameHindi: "स्वास्थ्य जांच" },
+  { name: "Physiotherapy", nameHindi: "फिजियोथेरेपी" },
+  { name: "Diagnostic Lab", nameHindi: "डायग्नोस्टिक लैब" },
+  { name: "Vaccination", nameHindi: "टीकाकरण" }
 ];
 
 export const faqList = [
-  { q: "How can I contact the hospital?", qHindi: "हॉस्पिटल से संपर्क कैसे करें?", a: "Call +91-8700628028 or WhatsApp us for any enquiry.", aHindi: "किसी भी जानकारी के लिए +91-8700628028 पर कॉल या व्हाट्सएप करें।" },
+  { q: "How can I contact the hospital?", qHindi: "हॉस्पिटल से संपर्क कैसे करें?", a: "Call +91-9773626003 or WhatsApp +91-9560031001 for any enquiry.", aHindi: "किसी भी जानकारी के लिए +91-9773626003 पर कॉल या +91-9560031001 पर व्हाट्सएप करें।" },
   { q: "Emergency service timing?", qHindi: "इमरजेंसी सेवा का समय?", a: "24/7 available. Come anytime.", aHindi: "24/7 उपलब्ध। कभी भी आएं।" },
   { q: "Where is the hospital?", qHindi: "हॉस्पिटल कहां है?", a: "Plot D-3, Main Market, Old Kondli, Delhi 110096", aHindi: "प्लॉट D-3, मेन मार्केट, पुरानी कोंडली, दिल्ली 110096" },
   { q: "What services are available?", qHindi: "क्या सेवाएं उपलब्ध हैं?", a: "OPD, Emergency, Lab, X-Ray, Ultrasound, Surgery, and more.", aHindi: "ओपीडी, इमरजेंसी, लैब, एक्स-रे, अल्ट्रासाउंड, सर्जरी आदि।" },
   { q: "What are the consultation fees?", qHindi: "परामर्श शुल्क क्या है?", a: "Starting from Rs.200. Varies by specialist.", aHindi: "200 रुपये से शुरू। विशेषज्ञ के अनुसार अलग।" },
   { q: "Is parking available?", qHindi: "पार्किंग उपलब्ध है?", a: "Yes, free parking available.", aHindi: "हां, मुफ्त पार्किंग उपलब्ध।" },
   { q: "Where is Relax Diagnostics?", qHindi: "रिलैक्स डायग्नोस्टिक्स कहां है?", a: "D-1, Main Market, Near SBI, Kondli Extension. Call 9990187799.", aHindi: "D-1, मेन मार्केट, SBI के पास, कोंडली एक्सटेंशन। कॉल 9990187799।" },
-  { q: "Do you have ambulance service?", qHindi: "एम्बुलेंस सेवा है?", a: "Yes, 24/7 ambulance service available. Call 8700628028.", aHindi: "हां, 24/7 एम्बुलेंस सेवा उपलब्ध। कॉल 8700628028।" },
+  { q: "Do you have ambulance service?", qHindi: "एम्बुलेंस सेवा है?", a: "Yes, 24/7 ambulance service available. Call +91-9350009600.", aHindi: "हां, 24/7 एम्बुलेंस सेवा उपलब्ध। कॉल +91-9350009600।" },
   { q: "What blood tests are available?", qHindi: "कौन से ब्लड टेस्ट होते हैं?", a: "CBC, Sugar, Thyroid, Lipid Profile, KFT, LFT and more.", aHindi: "सीबीसी, शुगर, थायरॉयड, लिपिड प्रोफाइल, केएफटी, एलएफटी आदि।" },
   { q: "Is OPD available on Sunday?", qHindi: "रविवार को ओपीडी है?", a: "Yes, OPD available all 7 days from 9AM to 9PM.", aHindi: "हां, सातों दिन सुबह 9 से रात 9 तक ओपीडी।" }
 ];
@@ -1007,6 +1019,7 @@ export const translations = {
     yearsExperience: "Years Experience", happyPatients: "Happy Patients", emergencyCare: "Emergency Care",
     pageNotFound: "Page Not Found", goHome: "Go to Home", knowMore: "Know More", testBooking: "Book Test",
     diagnostics: "Diagnostics"
+    , availableServices: "Available Services"
   },
   hi: {
     home: "होम", services: "सेवाएं", doctors: "डॉक्टर", about: "हमारे बारे में", contact: "संपर्क",
@@ -1016,6 +1029,7 @@ export const translations = {
     getDirections: "दिशा-निर्देश", viewAll: "सभी देखें", readMore: "और पढ़ें",
     yearsExperience: "वर्षों का अनुभव", happyPatients: "खुश मरीज", emergencyCare: "इमरजेंसी सेवा",
     pageNotFound: "पेज नहीं मिला", goHome: "होम पर जाएं", knowMore: "और जानें", testBooking: "टेस्ट बुक करें",
-    diagnostics: "डायग्नोस्टिक्स"
+    diagnostics: "डायग्नोस्टिक्स",
+    availableServices: "उपलब्ध सेवाएं"
   }
 };

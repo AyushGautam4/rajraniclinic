@@ -17,7 +17,6 @@ import { Button } from '../components/ui/button';
 import { consultantDoctors as doctors, hospitalInfo, translations } from '../mockData';
 import { AppContext } from '../App';
 import AppointmentModal from '../components/AppointmentModal';
-import WhatsAppFloat from '../components/WhatsAppFloat';
 import { assetPath } from '../lib/assetPath';
 
 const DoctorsPage = () => {
@@ -349,7 +348,6 @@ const DoctorsPage = () => {
         </div>
       </section>
 
-      <WhatsAppFloat />
       <AppointmentModal isOpen={showAppointmentModal} onClose={() => setShowAppointmentModal(false)} />
     </div>
   );

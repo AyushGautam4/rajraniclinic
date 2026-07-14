@@ -73,18 +73,18 @@ const WelcomePopup = () => {
         </p>
 
         <div className="mt-6 space-y-3 text-left">
-          <a href="tel:+918700628028" className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl bg-teal-600 px-4 py-3 text-sm font-bold text-white shadow-lg hover:bg-teal-700 transition-all">
+          <a href="tel:+919773626003" className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl bg-teal-600 px-4 py-3 text-sm font-bold text-white shadow-lg hover:bg-teal-700 transition-all">
             <Phone className="h-4 w-4" />
-            📞 Call Now: +91-8700628028
+             Call Now: +91-9773626003
           </a>
-          <a href="https://wa.me/918700628028" target="_blank" rel="noreferrer" className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl bg-green-600 px-4 py-3 text-sm font-bold text-white shadow-lg hover:bg-green-700 transition-all">
+          <a href="https://wa.me/919560031001" target="_blank" rel="noreferrer" className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl bg-green-600 px-4 py-3 text-sm font-bold text-white shadow-lg hover:bg-green-700 transition-all">
             <MessageCircle className="h-4 w-4" />
-            💬 WhatsApp Us
+             WhatsApp Us
           </a>
           <Link to="/contact" onClick={() => setOpen(false)} className="flex min-h-[48px] items-center justify-center gap-2 rounded-xl border border-slate-200 px-4 py-3 text-sm font-bold text-slate-800 hover:bg-slate-50 transition-all">
             Fill Enquiry Form
-            <ArrowRight className="h-4 w-4" />
-          </Link>
+            <ArrowRight className="h-4 w-4" /> 
+          </Link>    
         </div>
       </div>
     </div>

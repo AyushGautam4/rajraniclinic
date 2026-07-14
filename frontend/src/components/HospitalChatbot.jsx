@@ -1,50 +1,86 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Bot, MessageCircle, Send, X } from 'lucide-react';
 
 const responses = [
   {
     type: 'greet',
     keywords: ['hello', 'hi', 'helo', 'namaste', 'namaskar', 'hey', 'हेलो', 'नमस्ते'],
-    reply: 'Namaste! Welcome to Raj Rani Hospital. Main aapki kaise help kar sakta hoon?\n\n1. OPD Timing\n2. Doctor Info\n3. Lab Tests\n4. Emergency\n5. Book Appointment'
+    reply: 'Namaste! Welcome to Raj Rani Hospital. Main aapki kaise help kar sakta hoon?\n\n1. OPD Timing\n2. Doctor Info\n3. Lab Tests\n4. Emergency\n5. Book Appointment\n6. Ambulance\n7. Parking\n8. Pharmacy\n9. Address'
   },
   {
     type: 'opd',
-    keywords: ['opd', 'timing', 'time', 'when', 'hours', 'open', 'समय', 'टाइम', '1'],
-    reply: 'OPD Timings:\nMorning: 11 AM - 2 PM\nEvening: 7 PM - 10 PM\n\nEmergency: 24/7 Available\n\nCall us: +91-8700628028'
+    keywords: ['opd', 'timing', 'time', 'when', 'hours', 'open', 'visiting', 'visit hour', 'समय', 'टाइम', '1'],
+    reply: 'OPD Timings:\nMorning: 11 AM - 2 PM\nEvening: 7 PM - 10 PM\n\nEmergency: 24/7 Available\n\nCall us: +91-9773626003'
   },
   {
     type: 'doctor',
-    keywords: ['doctor', 'dr', 'specialist', 'gynaecologist', 'physician', 'डॉक्टर', '2'],
+    keywords: ['doctor', 'dr', 'specialist', 'gynaecologist', 'gynecologist', 'physician', 'orthopedic', 'orthopaedic', 'cardiologist', 'pediatrician', 'paediatrician', 'surgeon', 'डॉक्टर', '2'],
     reply: 'Our Specialists:\nDr. Raj Rani - Gynaecologist\nDr. Sandeep Kumar - Internal Medicine\nDr. Jitendra Kumar - Orthopaedic\nDr. R.K. Shrivastav - Paediatrician\nDr. Waseem Farooqui - Cardiologist\n\nView all: [Doctors Page](/doctors)'
   },
   {
     type: 'lab',
-    keywords: ['lab', 'test', 'blood', 'diagnostic', 'report', 'cbc', '3', 'जांच', 'टेस्ट'],
-    reply: 'Relax Diagnostics (Linked with Raj Rani Hospital)\n\nOffer tests available:\nCBC - Rs.200\nLipid Profile - Rs.400\nTSH - Rs.200\nViral Marker - Rs.1000\n\nTiming: 8 AM - 10 PM (Mon-Sat)\nCall: +91-9990187799'
+    keywords: ['lab', 'test', 'blood', 'diagnostic', 'report', 'cbc', 'x-ray', 'xray', 'ultrasound', 'ecg', 'echo', 'package', 'checkup', 'check up', '3', 'जांच', 'टेस्ट'],
+    reply: 'Relax Diagnostics (Linked with Raj Rani Hospital)\n\nOffer tests available:\nCBC - Rs.200\nLipid Profile - Rs.400\nTSH - Rs.200\nViral Marker - Rs.1000\n\nFull body packages also available.\nTiming: 8 AM - 10 PM (Mon-Sat)\nCall: +91-9990187799\n\n[See all offers](/diagnostics)'
   },
   {
     type: 'emergency',
-    keywords: ['emergency', 'urgent', 'help', 'accident', '4', 'इमरजेंसी', 'जरूरी'],
-    reply: 'EMERGENCY SUPPORT\n\nCall immediately:\n+91-8700628028\n\nWe are available 24/7. Ambulance support available.\n\nPlease call right now if it is urgent!'
+    keywords: ['emergency', 'urgent', 'help', 'accident', 'critical', '4', 'इमरजेंसी', 'जरूरी'],
+    reply: 'EMERGENCY SUPPORT\n\nCall immediately:\n+91-9350009600\n\nGeneral call also available:\n+91-9773626003\n\nWe are available 24/7. Ambulance support available.\n\nPlease call right now if it is urgent!'
   },
   {
     type: 'appointment',
-    keywords: ['appointment', 'book', 'visit', 'meet', '5', 'अपॉइंटमेंट', 'बुकिंग'],
-    reply: 'Book Appointment:\n\nCall: +91-8700628028\nWhatsApp: +91-8700628028\nOnline Form: [Contact Page](/contact)\n\nWe usually respond within 2 hours!'
+    keywords: ['appointment', 'book', 'schedule', 'meet', '5', 'अपॉइंटमेंट', 'बुकिंग'],
+    reply: 'Book Appointment:\n\nCall: +91-9773626003\nWhatsApp: +91-9560031001\nOnline Form: [Contact Page](/contact)\n\nWe usually respond within 2 hours!'
   },
   {
     type: 'fee',
-    keywords: ['fee', 'charge', 'cost', 'price', 'rate', 'fees', 'फीस', 'पैसे'],
+    keywords: ['fee', 'charge', 'cost', 'price', 'rate', 'fees', 'consultation', 'फीस', 'पैसे'],
     reply: 'Consultation Fees:\nGeneral Medicine - Rs.300\nGynaecology - Rs.300-400\nPaediatrics - Rs.500\nOrthopaedic - Rs.500\nCardiology - Rs.1000\n\nFor exact fees, please call us.'
   },
   {
     type: 'location',
-    keywords: ['location', 'address', 'where', 'map', 'kondli', 'पता', 'कहाँ'],
+    keywords: ['location', 'address', 'where', 'map', 'kondli', 'directions', 'पता', 'कहाँ'],
     reply: 'Our Address:\nPlot No. D-3, Main Market\nOld Kondli, New Delhi - 110096\n\nNear SBI Bank, Kondli Extension\n\n[View on Google Maps](https://maps.app.goo.gl/P5xfA87tjCE6Bit79)'
+  },
+  {
+    type: 'ambulance',
+    keywords: ['ambulance', 'एम्बुलेंस', '6'],
+    reply: '24/7 Ambulance Service is available.\n\nCall immediately: +91-9350009600\n\nWe reach most nearby areas (Kondli, Trilokpuri, Mayur Vihar, Gharoli) quickly.'
+  },
+  {
+    type: 'parking',
+    keywords: ['parking', 'park', 'car', 'bike stand', 'पार्किंग', '7'],
+    reply: 'Yes, free parking is available at Rajrani Hospital, Old Kondli for patients and visitors.'
+  },
+  {
+    type: 'pharmacy',
+    keywords: ['pharmacy', 'medicine', 'medicines', 'chemist', 'dawai', 'दवा', 'फार्मेसी', '8'],
+    reply: 'Plus Point Pharmacy is located right at the hospital entrance — open through OPD hours for all prescribed medicines.'
+  },
+  {
+    type: 'insurance',
+    keywords: ['insurance', 'cghs', 'cashless', 'mediclaim', 'बीमा'],
+    reply: 'Rajrani Hospital is CGHS Empanelled. For insurance/cashless queries, please call reception: +91-9773626003 with your policy details.'
+  },
+  {
+    type: 'about',
+    keywords: ['about', 'history', 'established', 'since when', 'हॉस्पिटल के बारे में'],
+    reply: 'Rajrani Hospital has been serving Old Kondli since 2005 — 36+ years of combined medical experience, ISO Certified | NABH Standards, led by Dr. Sandeep Kumar.\n\n[Read more](/about)'
+  },
+  {
+    type: 'thanks',
+    keywords: ['thanks', 'thank you', 'thankyou', 'dhanyavaad', 'शुक्रिया', 'धन्यवाद'],
+    reply: "You're welcome! Feel free to ask anything else, or call us directly: +91-9773626003"
+  },
+  {
+    type: 'bye',
+    keywords: ['bye', 'goodbye', 'ok bye', 'alright'],
+    reply: 'Take care! We are here 24/7 if you need us. +91-9773626003'
   }
 ];
 
-const quickReplies = ['OPD Timing', 'Book Appointment', 'Lab Tests', 'Emergency'];
+const quickReplies = ['OPD Timing', 'Book Appointment', 'Lab Tests', 'Emergency', 'Ambulance', 'Parking'];
 
 const now = () => new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
@@ -85,7 +121,7 @@ const HospitalChatbot = () => {
     const text = value.toLowerCase();
     return responses.find((item) => item.keywords.some((keyword) => text.includes(keyword.toLowerCase()))) || {
       type: 'default',
-      reply: 'Main samjha nahi. Aap yeh try karein:\n1. OPD Timing\n2. Doctor Info\n3. Lab Tests\n4. Emergency\n5. Book Appointment\n\nYa seedha call karein: +91-8700628028'
+      reply: 'Main samjha nahi. Aap yeh try karein:\n1. OPD Timing\n2. Doctor Info\n3. Lab Tests\n4. Emergency\n5. Book Appointment\n6. Ambulance\n7. Parking\n8. Pharmacy\n\nYa seedha call karein: +91-9773626003'
     };
   };
 
@@ -104,26 +140,28 @@ const HospitalChatbot = () => {
 
   const hasQuickReplies = useMemo(() => messages.length === 1 && messages[0]?.role === 'bot', [messages]);
 
-  return (
+  if (typeof document === 'undefined') return null;
+
+  return createPortal(
     <>
-      <div className="fixed bottom-5 left-5 z-[150]">
+      <div className="floating-action-wrap floating-action-chat">
         <div className="group relative">
-          <span className="pointer-events-none absolute bottom-full left-0 mb-2 whitespace-nowrap rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-medium text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100">
+          <span className="pointer-events-none absolute bottom-1/2 right-full mr-2.5 translate-y-1/2 whitespace-nowrap rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-medium text-white opacity-0 shadow-lg transition-opacity duration-200 group-hover:opacity-100 hidden md:block">
             Chat with us
           </span>
           <button
             type="button"
             onClick={() => setOpen((current) => !current)}
-            className="chatbot-pulse flex h-14 w-14 items-center justify-center rounded-full bg-teal-600 text-white shadow-xl hover:bg-teal-700"
+            className="chatbot-pulse flex h-12 w-12 items-center justify-center rounded-full bg-teal-600 text-white shadow-xl hover:bg-teal-700 md:h-14 md:w-14"
             aria-label="Chat with Raj Rani Hospital"
           >
-            {open ? <X className="h-6 w-6" /> : <MessageCircle className="h-6 w-6" />}
+            {open ? <X className="h-5 w-5 md:h-6 md:w-6" /> : <MessageCircle className="h-5 w-5 md:h-6 md:w-6" />}
           </button>
         </div>
       </div>
 
       {open && (
-        <div className="fixed bottom-24 left-4 z-[150] flex h-[500px] max-h-[72vh] w-[calc(100vw-2rem)] max-w-[360px] flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
+        <div className="floating-chat-panel">
           <div className="flex items-center gap-3 bg-gradient-to-r from-teal-600 to-blue-600 px-4 py-3 text-white">
             <div className="flex h-9 w-9 items-center justify-center rounded-full bg-white/15">
               <Bot className="h-5 w-5" />
@@ -170,7 +208,8 @@ const HospitalChatbot = () => {
           </form>
         </div>
       )}
-    </>
+    </>,
+    document.body
   );
 };
 

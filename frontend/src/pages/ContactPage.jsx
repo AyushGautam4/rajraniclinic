@@ -28,7 +28,6 @@ import {
 } from 'lucide-react';
 import { hospitalInfo, diagnosticsInfo, faqList, translations } from '../mockData';
 import { AppContext } from '../App';
-import WhatsAppFloat from '../components/WhatsAppFloat';
 
 const ContactPage = () => {
   const { darkMode, language } = useContext(AppContext);
@@ -249,7 +248,7 @@ const ContactPage = () => {
     {
       icon: Ambulance,
       title: language === 'hi' ? 'इमरजेंसी' : 'Emergency',
-      subtitle: language === 'hi' ? '24/7 support' : '24/7 support',
+      subtitle: language === 'hi' ? '24/7 • 9350009600 / 9773626003' : '24/7 • 9350009600 / 9773626003',
       className: darkMode ? 'bg-red-950/40 border-red-900/60 hover:border-red-500/60' : 'bg-red-50 border-red-200 hover:border-red-300',
       iconClass: darkMode ? 'bg-red-500/15 text-red-300' : 'bg-red-100 text-red-600',
       action: () => window.location.href = `tel:${hospitalInfo.emergency}`
@@ -680,7 +679,7 @@ const ContactPage = () => {
         </div>
       </section>
 
-      <WhatsAppFloat />
+      
     </div>
   );
 };

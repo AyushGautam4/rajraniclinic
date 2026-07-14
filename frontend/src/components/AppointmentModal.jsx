@@ -74,8 +74,11 @@ const AppointmentModal = ({ isOpen, onClose }) => {
             darkMode ? 'border-red-800 bg-red-900/30' : 'border-red-200 bg-red-50'
           }`}>
             <p className={`text-[10px] font-semibold sm:text-xs ${darkMode ? 'text-red-300' : 'text-red-700'}`}>Emergency: 24/7</p>
-            <a href={`tel:${hospitalInfo.emergency}`} className={`text-[10px] sm:text-xs ${darkMode ? 'text-red-400' : 'text-red-600'}`}>
+            <a href={`tel:${hospitalInfo.emergency}`} className={`mt-1 block text-[10px] sm:text-xs ${darkMode ? 'text-red-400' : 'text-red-600'}`}>
               {hospitalInfo.emergency}
+            </a>
+            <a href={`tel:${hospitalInfo.emergencyAlt}`} className={`mt-1 block text-[10px] sm:text-xs ${darkMode ? 'text-red-400' : 'text-red-600'}`}>
+              {hospitalInfo.emergencyAlt} <span className="font-semibold">(General Call)</span>
             </a>
           </div>
 

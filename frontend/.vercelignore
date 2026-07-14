@@ -1,0 +1,11 @@
+node_modules
+build
+.cache
+*.log
+*.err.log
+*.tmp
+*.bak
+*.old
+*.new.jsx
+*.rewrite.jsx
+netlify
